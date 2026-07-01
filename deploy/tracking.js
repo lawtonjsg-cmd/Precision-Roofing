@@ -16,8 +16,8 @@
   var CONFIG = {
     GA4_ID:         'G-XXXXXXXXXX',         // GA4 Measurement ID (optional)
     GOOGLE_ADS_ID:  'AW-18112449753',       // Google Ads Conversion ID
-    ADS_LEAD_LABEL: 'XXXXXXXXXXXXXXXXXX',   // Google Ads label — form lead
-    ADS_CALL_LABEL: 'XXXXXXXXXXXXXXXXXX',   // Google Ads label — phone call
+    ADS_LEAD_LABEL: 'ctJ0CJn0lMkcENmZ2LxD', // Google Ads label — form lead
+    ADS_CALL_LABEL: '5C6_CJz0lMkcENmZ2LxD', // Google Ads label — phone call
     META_PIXEL_ID:  ''                       // Meta (Facebook) Pixel ID (optional)
   };
 
@@ -56,8 +56,15 @@
   // ---- Conversion fire helpers ----
   window.prTrackLead = function (extra) {
     try {
+      // Enhanced Conversions: pass what the user typed; Google hashes it
+      var emailEl = document.getElementById('email');
+      var phoneEl = document.getElementById('phone');
+      gtag('set', 'user_data', {
+        email: (emailEl && emailEl.value) || '',
+        phone_number: (phoneEl && phoneEl.value) || ''
+      });
       if (configured(CONFIG.GOOGLE_ADS_ID) && configured(CONFIG.ADS_LEAD_LABEL))
-        gtag('event', 'conversion', { send_to: CONFIG.GOOGLE_ADS_ID + '/' + CONFIG.ADS_LEAD_LABEL });
+        gtag('event', 'conversion', { send_to: CONFIG.GOOGLE_ADS_ID + '/' + CONFIG.ADS_LEAD_LABEL, value: 1.0, currency: 'USD' });
       if (configured(CONFIG.GA4_ID)) gtag('event', 'generate_lead', extra || {});
       if (window.fbq) fbq('track', 'Lead');
     } catch (e) {}
@@ -68,7 +75,7 @@
   window.prTrackCall = function () {
     try {
       if (configured(CONFIG.GOOGLE_ADS_ID) && configured(CONFIG.ADS_CALL_LABEL))
-        gtag('event', 'conversion', { send_to: CONFIG.GOOGLE_ADS_ID + '/' + CONFIG.ADS_CALL_LABEL });
+        gtag('event', 'conversion', { send_to: CONFIG.GOOGLE_ADS_ID + '/' + CONFIG.ADS_CALL_LABEL, value: 1.0, currency: 'USD' });
       if (configured(CONFIG.GA4_ID)) gtag('event', 'click_to_call');
       if (window.fbq) fbq('track', 'Contact');
     } catch (e) {}
