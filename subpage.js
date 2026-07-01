@@ -1,74 +1,41 @@
-/* ============================================================
-   Precision Roofing — roof-install video
-   • Autoplays the drone re-roof clip (muted) the first time it
-     scrolls into view.
-   • Center Play button lets visitors start it manually if the
-     browser blocks autoplay, and toggles play/pause.
-   • Replay button appears when the clip ends.
-   ============================================================ */
+/* Precision Roofing Alabama LLC — sub-page interactions */
 (function () {
-  var stage   = document.getElementById('installStage');
-  var video   = document.getElementById('roofVideo');
-  var playBtn = document.getElementById('roofPlay');
-  var replay  = document.getElementById('roofReplay');
-  if (!stage || !video) return;
+  // year
+  var y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
 
-  var autoPlayed = false;
-
-  function play() {
-    var p = video.play();
-    if (p && p.catch) p.catch(function () { showPlay(); });
-  }
-  function showPlay() { if (playBtn) playBtn.classList.remove('hide'); }
-  function hidePlay() { if (playBtn) playBtn.classList.add('hide'); }
-  function showReplay() { if (replay) replay.classList.add('show'); }
-  function hideReplay() { if (replay) replay.classList.remove('show'); }
-
-  // --- video state → UI ---
-  video.addEventListener('play',  function () { hidePlay(); hideReplay(); });
-  video.addEventListener('playing', hidePlay);
-  video.addEventListener('pause', function () { if (!video.ended) showPlay(); });
-  video.addEventListener('ended', function () { showReplay(); showPlay(); });
-
-  // --- manual controls ---
-  if (playBtn) {
-    playBtn.addEventListener('click', function () {
-      if (video.paused || video.ended) { hideReplay(); play(); }
-      else { video.pause(); }
+  // mobile menu (subnav)
+  var burger = document.getElementById('subBurger');
+  var menu = document.getElementById('subMenu');
+  if (burger && menu) {
+    burger.addEventListener('click', function () {
+      var open = menu.classList.toggle('open');
+      burger.classList.toggle('active', open);
     });
-  }
-  if (replay) {
-    replay.addEventListener('click', function () {
-      hideReplay();
-      video.currentTime = 0;
-      play();
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        menu.classList.remove('open');
+        burger.classList.remove('active');
+      });
     });
   }
 
-  // --- autoplay once on scroll into view ---
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (reduce) {
-    showPlay(); // let the user choose to play
-    return;
-  }
-
+  // scroll reveal
+  var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting && !autoPlayed) {
-          autoPlayed = true;
-          io.unobserve(stage);
-          if (document.hidden) {
-            document.addEventListener('visibilitychange', function h() {
-              if (!document.hidden) { document.removeEventListener('visibilitychange', h); play(); }
-            });
-          } else { play(); }
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.4 });
-    io.observe(stage);
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    reveals.forEach(function (el, i) {
+      el.style.transitionDelay = (Math.min(i % 6, 5) * 60) + 'ms';
+      io.observe(el);
+    });
   } else {
-    play();
+    reveals.forEach(function (el) { el.classList.add('in'); });
   }
 })();
