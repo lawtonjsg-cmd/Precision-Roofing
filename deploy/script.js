@@ -52,11 +52,13 @@
   var form = document.getElementById('quoteForm');
   var success = document.getElementById('formSuccess');
 
-  // ---- Email delivery (Vercel function + Resend) ----
-  // Submissions POST to /api/lead, which emails you the lead and sends
-  // the customer an auto-reply. Configure RESEND_API_KEY / LEAD_TO_EMAIL /
-  // FROM_EMAIL as Environment Variables in your Vercel project.
-  var FORM_ENDPOINT = '/api/lead';
+  // ---- Email delivery (Web3Forms) ----
+  // Submissions POST to Web3Forms, which emails the lead to the inbox(es)
+  // tied to this access key. No backend or domain needed.
+  var FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+  var WEB3FORMS_KEY = '3c0f07c1-f2ef-4efe-8573-3fe251e4c961';
+  // Where leads are delivered (all three get every submission):
+  var LEAD_RECIPIENTS = 'will.precisionral@gmail.com, cary.precisonral@gmail.com, cooper.precisionral@gmail.com';
 
   function setErr(id, isErr) {
     var f = document.getElementById(id).closest('.field');
@@ -103,8 +105,7 @@
       return;
     }
 
-    // In the in-tool preview there is no backend, so show the demo success.
-    // On the live site, /api/lead handles delivery.
+    // In the in-tool preview, still show the demo success on any failure.
     var isLive = location.hostname.indexOf('precisionroofingalabama') !== -1;
     function handleFail() { if (isLive) { showSendError(btn); } else { showSuccess(); } }
 
@@ -115,6 +116,10 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: 'New Quote Request — ' + name,
+        from_name: 'Precision Roofing Alabama Website',
+        replyto: email,
         name: name,
         email: email,
         phone: phone,
@@ -122,7 +127,7 @@
         message: message
       })
     })
-      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (r) { return r.json(); })
       .then(function (res) { if (res && res.success) { showSuccess(); } else { handleFail(); } })
       .catch(function () { handleFail(); });
   });
