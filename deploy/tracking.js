@@ -15,7 +15,7 @@
 (function () {
   var CONFIG = {
     GA4_ID:         'G-XXXXXXXXXX',         // GA4 Measurement ID (optional)
-    GOOGLE_ADS_ID:  'AW-XXXXXXXXXX',        // Google Ads Conversion ID
+    GOOGLE_ADS_ID:  'AW-18112449753',       // Google Ads Conversion ID
     ADS_LEAD_LABEL: 'XXXXXXXXXXXXXXXXXX',   // Google Ads label — form lead
     ADS_CALL_LABEL: 'XXXXXXXXXXXXXXXXXX',   // Google Ads label — phone call
     META_PIXEL_ID:  ''                       // Meta (Facebook) Pixel ID (optional)
