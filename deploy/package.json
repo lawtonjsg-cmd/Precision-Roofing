@@ -1,0 +1,15 @@
+{
+  "name": "precision-roofing-alabama",
+  "version": "1.0.0",
+  "description": "Precision Roofing Alabama LLC - Static Website",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static site - no build required'",
+    "dev": "echo 'Use a local server to test'",
+    "lint": "echo 'No linting configured for static site'"
+  },
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  },
+  "devDependencies": {}
+}
