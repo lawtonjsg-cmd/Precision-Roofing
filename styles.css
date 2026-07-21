@@ -582,7 +582,7 @@ h2.display{font-size:clamp(30px,4.6vw,52px);margin-top:18px}
 .snl-menu a:hover{background:rgba(255,255,255,.07);color:#fff}
 
 .subnav-logo{flex:0 0 auto;margin:0 clamp(24px,3.4vw,54px);display:flex;align-items:center}
-.subnav-logo img{height:48px;width:auto;display:block}
+.subnav-logo img{height:64px;width:auto;display:block}
 .subnav-soc{display:flex;align-items:center;gap:14px}
 .subnav-soc a{display:grid;place-items:center;color:rgba(255,255,255,.8);transition:.22s var(--ease)}
 .subnav-soc a:hover{color:#fff}
