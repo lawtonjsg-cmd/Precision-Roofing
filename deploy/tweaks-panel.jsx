@@ -1,541 +1,780 @@
-// @ds-adherence-ignore -- omelette starter scaffold (raw elements/hex/px by design)
+/* ============================================================
+   Precision Roofing Alabama LLC - Design System
+   Palette: Brand navy #0F364F · Cream · White
+   Type: Archivo (display) · Hanken Grotesk (text)
+   ============================================================ */
 
-/* BEGIN USAGE */
-// tweaks-panel.jsx
-// Reusable Tweaks shell + form-control helpers.
-// Exports (to window): useTweaks, TweaksPanel, TweakSection, TweakRow, TweakSlider,
-//   TweakToggle, TweakRadio, TweakSelect, TweakText, TweakNumber, TweakColor, TweakButton.
-//
-// Owns the host protocol (listens for __activate_edit_mode / __deactivate_edit_mode,
-// posts __edit_mode_available / __edit_mode_set_keys / __edit_mode_dismissed) so
-// individual prototypes don't re-roll it. Ships a consistent set of controls so you
-// don't hand-draw <input type="range">, segmented radios, steppers, etc.
-//
-// Usage (in an HTML file that loads React + Babel):
-//
-//   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-//     "primaryColor": "#D97757",
-//     "palette": ["#D97757", "#29261b", "#f6f4ef"],
-//     "fontSize": 16,
-//     "density": "regular",
-//     "dark": false
-//   }/*EDITMODE-END*/;
-//
-//   function App() {
-//     const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
-//     return (
-//       <div style={{ fontSize: t.fontSize, color: t.primaryColor }}>
-//         Hello
-//         <TweaksPanel>
-//           <TweakSection label="Typography" />
-//           <TweakSlider label="Font size" value={t.fontSize} min={10} max={32} unit="px"
-//                        onChange={(v) => setTweak('fontSize', v)} />
-//           <TweakRadio  label="Density" value={t.density}
-//                        options={['compact', 'regular', 'comfy']}
-//                        onChange={(v) => setTweak('density', v)} />
-//           <TweakSection label="Theme" />
-//           <TweakColor  label="Primary" value={t.primaryColor}
-//                        options={['#D97757', '#2A6FDB', '#1F8A5B', '#7A5AE0']}
-//                        onChange={(v) => setTweak('primaryColor', v)} />
-//           <TweakColor  label="Palette" value={t.palette}
-//                        options={[['#D97757', '#29261b', '#f6f4ef'],
-//                                  ['#475569', '#0f172a', '#f1f5f9']]}
-//                        onChange={(v) => setTweak('palette', v)} />
-//           <TweakToggle label="Dark mode" value={t.dark}
-//                        onChange={(v) => setTweak('dark', v)} />
-//         </TweaksPanel>
-//       </div>
-//     );
-//   }
-//
-// TweakRadio is the segmented control for 2–3 short options (auto-falls-back to
-// TweakSelect past ~16/~10 chars per label); reach for TweakSelect directly when
-// options are many or long. For color tweaks always curate 3-4 options rather than
-// a free picker; an option can also be a whole 2–5 color palette (the stored value
-// is the array). The Tweak* controls are a floor, not a ceiling — build custom
-// controls inside the panel if a tweak calls for UI they don't cover.
-/* END USAGE */
-// ─────────────────────────────────────────────────────────────────────────────
+:root{
+  --navy:#0F364F;
+  --navy-900:#091f2e;
+  --navy-800:#0b2a3d;
+  --navy-700:#16455e;
+  --navy-600:#205673;
+  --navy-line:rgba(15,54,79,.14);
+  --navy-faint:rgba(15,54,79,.06);
 
-const __TWEAKS_STYLE = `
-  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
-    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
-    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
-    background:rgba(250,249,247,.78);color:#29261b;
-    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
-    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
-    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
-    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
-  .twk-hd{display:flex;align-items:center;justify-content:space-between;
-    padding:10px 8px 10px 14px;cursor:move;user-select:none}
-  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
-  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
-    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
-  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
-  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
-    overflow-y:auto;overflow-x:hidden;min-height:0;
-    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
-  .twk-body::-webkit-scrollbar{width:8px}
-  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
-  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
-    border:2px solid transparent;background-clip:content-box}
-  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
-    border:2px solid transparent;background-clip:content-box}
-  .twk-row{display:flex;flex-direction:column;gap:5px}
-  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
-  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
-    color:rgba(41,38,27,.72)}
-  .twk-lbl>span:first-child{font-weight:500}
-  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+  --cream:#F4EEE1;
+  --cream-200:#ECE3D1;
+  --cream-300:#E2D6BE;
+  --white:#FFFFFF;
+  --paper:#FBF8F1;
 
-  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-    color:rgba(41,38,27,.45);padding:10px 0 0}
-  .twk-sect:first-child{padding-top:0}
+  --ink:#16242E;
+  --ink-soft:#43586A;
+  --on-navy:#EAF1F5;
+  --on-navy-soft:#A9C2D1;
 
-  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
-    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
-    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
-  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
-  select.twk-field{padding-right:22px;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
-    background-repeat:no-repeat;background-position:right 8px center}
+  --gold:#C79A45;
 
-  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
-    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
-  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
-    width:14px;height:14px;border-radius:50%;background:#fff;
-    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
-  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
-    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
-
-  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
-    background:rgba(0,0,0,.06);user-select:none}
-  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
-    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
-    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
-  .twk-seg.dragging .twk-seg-thumb{transition:none}
-  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
-    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
-    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;
-    overflow-wrap:anywhere}
-
-  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
-    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
-  .twk-toggle[data-on="1"]{background:#34c759}
-  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
-    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
-  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
-
-  .twk-num{display:flex;align-items:center;box-sizing:border-box;min-width:0;height:26px;padding:0 0 0 8px;
-    border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6)}
-  .twk-num-lbl{font-weight:500;color:rgba(41,38,27,.6);cursor:ew-resize;
-    user-select:none;padding-right:8px}
-  .twk-num input{flex:1;min-width:0;height:100%;border:0;background:transparent;
-    font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:0 8px 0 0;
-    outline:none;color:inherit;-moz-appearance:textfield}
-  .twk-num input::-webkit-inner-spin-button,.twk-num input::-webkit-outer-spin-button{
-    -webkit-appearance:none;margin:0}
-  .twk-num-unit{padding-right:8px;color:rgba(41,38,27,.45)}
-
-  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;
-    background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
-  .twk-btn:hover{background:rgba(0,0,0,.88)}
-  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
-  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
-
-  .twk-swatch{appearance:none;-webkit-appearance:none;width:56px;height:22px;
-    border:.5px solid rgba(0,0,0,.1);border-radius:6px;padding:0;cursor:default;
-    background:transparent;flex-shrink:0}
-  .twk-swatch::-webkit-color-swatch-wrapper{padding:0}
-  .twk-swatch::-webkit-color-swatch{border:0;border-radius:5.5px}
-  .twk-swatch::-moz-color-swatch{border:0;border-radius:5.5px}
-
-  .twk-chips{display:flex;gap:6px}
-  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
-    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
-    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
-    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
-  .twk-chip:hover{transform:translateY(-1px);
-    box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
-  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),
-    0 2px 6px rgba(0,0,0,.15)}
-  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
-    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
-  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
-  .twk-chip>span>i:first-child{box-shadow:none}
-  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
-    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
-`;
-
-// ── useTweaks ───────────────────────────────────────────────────────────────
-// Single source of truth for tweak values. setTweak persists via the host
-// (__edit_mode_set_keys → host rewrites the EDITMODE block on disk).
-function useTweaks(defaults) {
-  const [values, setValues] = React.useState(defaults);
-  // Accepts either setTweak('key', value) or setTweak({ key: value, ... }) so a
-  // useState-style call doesn't write a "[object Object]" key into the persisted
-  // JSON block.
-  const setTweak = React.useCallback((keyOrEdits, val) => {
-    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
-      ? keyOrEdits : { [keyOrEdits]: val };
-    setValues((prev) => ({ ...prev, ...edits }));
-    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
-    // Same-window signal so in-page listeners (deck-stage rail thumbnails)
-    // can react — the parent message only reaches the host, not peers.
-    window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
-  }, []);
-  return [values, setTweak];
+  --maxw:1200px;
+  --gutter:clamp(20px,5vw,64px);
+  --radius:4px;
+  --radius-lg:8px;
+  --shadow-sm:0 1px 2px rgba(9,31,46,.06), 0 2px 8px rgba(9,31,46,.05);
+  --shadow-md:0 10px 30px -12px rgba(9,31,46,.28);
+  --shadow-lg:0 30px 70px -28px rgba(9,31,46,.42);
+  --ease:cubic-bezier(.22,.61,.36,1);
 }
 
-// ── TweaksPanel ─────────────────────────────────────────────────────────────
-// Floating shell. Registers the protocol listener BEFORE announcing
-// availability — if the announce ran first, the host's activate could land
-// before our handler exists and the toolbar toggle would silently no-op.
-// The close button posts __edit_mode_dismissed so the host's toolbar toggle
-// flips off in lockstep; the host echoes __deactivate_edit_mode back which
-// is what actually hides the panel.
-function TweaksPanel({ title = 'Tweaks', children }) {
-  const [open, setOpen] = React.useState(false);
-  const dragRef = React.useRef(null);
-  const offsetRef = React.useRef({ x: 16, y: 16 });
-  const PAD = 16;
+*{box-sizing:border-box}
+.sr-only{position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:"Hanken Grotesk",system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  font-size:18px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:"Archivo",sans-serif;font-weight:800;line-height:1.04;margin:0;letter-spacing:-.02em;color:var(--navy)}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--navy-600);outline-offset:3px}
 
-  const clampToViewport = React.useCallback(() => {
-    const panel = dragRef.current;
-    if (!panel) return;
-    const w = panel.offsetWidth, h = panel.offsetHeight;
-    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
-    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
-    offsetRef.current = {
-      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
-      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
-    };
-    panel.style.right = offsetRef.current.x + 'px';
-    panel.style.bottom = offsetRef.current.y + 'px';
-  }, []);
+/* ---------- layout helpers ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+.section{padding-block:clamp(64px,9vw,128px)}
+.eyebrow{
+  font-family:"Archivo",sans-serif;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--navy-600);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--navy)}
+.eyebrow.center::before{display:none}
+h2.display{font-size:clamp(30px,4.6vw,52px);margin-top:18px}
+.lead{font-size:clamp(18px,2.1vw,21px);color:var(--ink-soft);max-width:60ch;text-wrap:pretty}
 
-  React.useEffect(() => {
-    if (!open) return;
-    clampToViewport();
-    if (typeof ResizeObserver === 'undefined') {
-      window.addEventListener('resize', clampToViewport);
-      return () => window.removeEventListener('resize', clampToViewport);
-    }
-    const ro = new ResizeObserver(clampToViewport);
-    ro.observe(document.documentElement);
-    return () => ro.disconnect();
-  }, [open, clampToViewport]);
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:15px;letter-spacing:.01em;
+  padding:15px 26px;border-radius:var(--radius);border:1.5px solid transparent;
+  transition:transform .25s var(--ease),background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease);
+  white-space:nowrap;
+}
+.btn svg{width:17px;height:17px}
+.btn-primary{background:var(--navy);color:var(--white);box-shadow:0 12px 26px -12px rgba(9,31,46,.6)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 34px -12px rgba(9,31,46,.7)}
+.btn-light{background:var(--cream);color:var(--navy);box-shadow:0 12px 26px -12px rgba(0,0,0,.5)}
+.btn-light:hover{transform:translateY(-2px);background:var(--white)}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-800);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--navy);border-color:var(--navy-line)}
+.btn-ghost:hover{border-color:var(--navy);background:var(--navy-faint)}
+.btn-ghost-light{background:transparent;color:var(--white);border-color:rgba(234,241,245,.35)}
+.btn-ghost-light:hover{background:rgba(255,255,255,.08);border-color:var(--on-navy)}
+.btn-lg{padding:18px 32px;font-size:16px}
 
-  React.useEffect(() => {
-    const onMsg = (e) => {
-      const t = e?.data?.type;
-      if (t === '__activate_edit_mode') setOpen(true);
-      else if (t === '__deactivate_edit_mode') setOpen(false);
-    };
-    window.addEventListener('message', onMsg);
-    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
-    return () => window.removeEventListener('message', onMsg);
-  }, []);
+/* ---------- top bar + header ---------- */
+.topbar{background:var(--navy-900);color:var(--on-navy-soft);font-size:13.5px}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:42px;padding-block:6px}
+.topbar a{color:var(--on-navy);font-weight:600}
+.topbar .tb-left{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.topbar .tb-item{display:flex;align-items:center;gap:7px}
+.topbar svg{width:14px;height:14px;color:var(--cream)}
+.topbar .tb-badges{display:flex;gap:18px;align-items:center}
+.topbar .stars{color:var(--cream);letter-spacing:2px}
 
-  const dismiss = () => {
-    setOpen(false);
-    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
-  };
+.site-header{position:sticky;top:0;z-index:50;background:rgba(251,248,241,.85);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:box-shadow .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease)}
+.site-header.scrolled{box-shadow:var(--shadow-sm);border-color:var(--navy-line);background:rgba(251,248,241,.95)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:78px}
+.brand{display:flex;align-items:center;gap:13px}
+.brand img{height:54px;width:auto}
+.brand .bt{display:flex;flex-direction:column;line-height:1}
+.brand .bt b{font-family:"Archivo";font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--navy)}
+.brand .bt span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{font-weight:600;font-size:15.5px;color:var(--ink);position:relative;padding:6px 0;white-space:nowrap}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--navy);transition:width .28s var(--ease)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.nav-phone{display:flex;align-items:center;gap:9px;font-family:"Archivo";font-weight:800;font-size:18px;color:var(--navy)}
+.nav-phone svg{width:18px;height:18px;color:var(--navy)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;padding:8px}
+.burger span{width:26px;height:2.5px;background:var(--navy);border-radius:2px;transition:.3s var(--ease)}
 
-  const onDragStart = (e) => {
-    const panel = dragRef.current;
-    if (!panel) return;
-    const r = panel.getBoundingClientRect();
-    const sx = e.clientX, sy = e.clientY;
-    const startRight = window.innerWidth - r.right;
-    const startBottom = window.innerHeight - r.bottom;
-    const move = (ev) => {
-      offsetRef.current = {
-        x: startRight - (ev.clientX - sx),
-        y: startBottom - (ev.clientY - sy),
-      };
-      clampToViewport();
-    };
-    const up = () => {
-      window.removeEventListener('mousemove', move);
-      window.removeEventListener('mouseup', up);
-    };
-    window.addEventListener('mousemove', move);
-    window.addEventListener('mouseup', up);
-  };
+/* ---------- hero ---------- */
+.hero{position:relative;background:var(--navy);color:var(--white);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(120% 90% at 85% 0%,rgba(32,86,115,.55),transparent 60%),
+  linear-gradient(180deg,var(--navy-800),var(--navy) 55%,var(--navy-900))}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,72px);align-items:center;padding-block:clamp(56px,8vw,104px)}
+.hero h1{color:var(--white);font-size:clamp(38px,6vw,72px);font-weight:900;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;color:var(--cream)}
+.hero .lead{color:var(--on-navy-soft);margin-top:22px;max-width:48ch}
+.hero-eyebrow{color:var(--on-navy);opacity:.95}
+.hero-eyebrow::before{background:var(--cream)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.hero-trust{display:flex;gap:26px;flex-wrap:wrap;margin-top:38px;padding-top:30px;border-top:1px solid rgba(169,194,209,.2)}
+.hero-trust .ht{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--on-navy);font-weight:600}
+.hero-trust svg{width:20px;height:20px;color:var(--cream);flex:none}
+.hero-media{position:relative}
+.hero-media image-slot{width:100%;height:clamp(360px,46vw,540px);box-shadow:var(--shadow-lg);border:6px solid rgba(255,255,255,.06)}
+.hero-badge{position:absolute;left:-22px;bottom:30px;background:var(--white);color:var(--ink);border-radius:var(--radius-lg);padding:18px 22px;box-shadow:var(--shadow-md);display:flex;align-items:center;gap:14px;max-width:250px}
+.hero-badge .num{font-family:"Archivo";font-weight:900;font-size:34px;color:var(--navy);line-height:1}
+.hero-badge .lbl{font-size:13px;color:var(--ink-soft);font-weight:600;line-height:1.3}
 
-  if (!open) return null;
-  return (
-    <>
-      <style>{__TWEAKS_STYLE}</style>
-      <div ref={dragRef} className="twk-panel" data-omelette-chrome=""
-           style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
-        <div className="twk-hd" onMouseDown={onDragStart}>
-          <b>{title}</b>
-          <button className="twk-x" aria-label="Close tweaks"
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onClick={dismiss}>✕</button>
-        </div>
-        <div className="twk-body">
-          {children}
-        </div>
-      </div>
-    </>
-  );
+/* ---------- marquee strip ---------- */
+.strip{background:var(--gold);color:#241a08}
+.strip .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 40px;padding-block:16px;font-family:"Archivo";font-weight:700;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+.strip .si{display:flex;align-items:center;gap:10px}
+.strip .si svg{width:16px;height:16px}
+
+/* ---------- services ---------- */
+.services{background:var(--white)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:46px}
+.sec-head.center{display:block;text-align:center}
+.sec-head.center .lead{margin-left:auto;margin-right:auto}
+.sec-head .lead{margin-top:14px}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc{
+  position:relative;background:var(--paper);border:1px solid var(--navy-line);border-radius:var(--radius-lg);
+  display:flex;flex-direction:column;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);overflow:hidden;
+}
+.svc:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:transparent;background:var(--white)}
+.svc-img{display:block;width:100%;height:230px;object-fit:cover}
+.svc-body{padding:26px 28px 28px;display:flex;flex-direction:column;flex:1}
+.svc h3{font-size:21px;margin-bottom:9px}
+.svc p{color:var(--ink-soft);font-size:15.5px}
+.svc .more{margin-top:auto;padding-top:18px;display:inline-flex;align-items:center;gap:7px;font-family:"Archivo";font-weight:700;font-size:13.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--navy);transition:gap .3s var(--ease)}
+.svc:hover .more{gap:12px}
+/* whole-card link (stretched), keeping the photo slot interactive */
+.svc{cursor:pointer}
+.svc-img{position:relative;z-index:2}
+.svc .more::after{content:"";position:absolute;inset:0;z-index:1}
+
+/* home hero-nav services dropdown */
+.hnav-links .snl-drop > a{cursor:pointer}
+.hnav-links .snl-menu a{color:var(--on-navy)}
+.hnav-links .snl-menu a::after{display:none}
+.hnav-links .snl-menu a:hover{color:#fff}
+
+/* ---------- about / why ---------- */
+.about{background:var(--navy);color:var(--on-navy)}
+.about .eyebrow{color:var(--on-navy)}
+.about .eyebrow::before{background:var(--cream)}
+.about h2,.about h2.display{color:var(--white)}
+.about .lead{color:var(--on-navy-soft)}
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(32px,4.5vw,64px);align-items:center}
+.about-media{position:relative}
+.about-media image-slot{width:100%;height:clamp(380px,48vw,520px);box-shadow:var(--shadow-md);border-radius:var(--radius-lg)}
+.about-media .stamp{position:absolute;right:-18px;top:-18px;width:128px;height:128px;border-radius:50%;background:var(--navy);color:var(--on-navy);display:grid;place-items:center;text-align:center;box-shadow:var(--shadow-md);transform:rotate(8deg)}
+.about-media .stamp b{font-family:"Archivo";font-weight:900;color:var(--cream);font-size:30px;display:block;line-height:1}
+.about-media .stamp span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-top:5px;line-height:1.3;padding:0 12px}
+.about h2{margin-top:18px}
+.about .lead{margin-top:18px}
+.why-list{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin-top:32px}
+.why{display:flex;gap:14px}
+.why .wi{flex:none;width:42px;height:42px;border-radius:var(--radius);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;color:var(--cream)}
+.why .wi svg{width:21px;height:21px}
+.why h4{font-size:16.5px;color:var(--white);margin-bottom:3px;font-weight:800}
+.why p{font-size:14px;color:var(--on-navy-soft)}
+
+/* ---------- why choose (numbered cards) ---------- */
+.whychoose{display:grid;grid-template-columns:1fr 1.12fr;gap:clamp(40px,6vw,96px);align-items:start;
+  margin-top:clamp(64px,9vw,118px)}
+.wc-head h2{color:var(--white);margin-top:14px}
+.wc-cards{display:flex;flex-direction:column;gap:18px}
+.wc-card{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;
+  background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--radius-lg);padding:26px 30px;transition:background .3s var(--ease),border-color .3s var(--ease)}
+.wc-card:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16)}
+.wc-num{font-family:"Archivo";font-weight:900;font-size:clamp(34px,3vw,44px);line-height:.9;color:var(--cream)}
+.wc-card h4{font-family:"Archivo";font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:8px}
+.wc-card p{font-size:15px;color:var(--on-navy-soft)}
+@media (max-width:880px){
+  .whychoose{grid-template-columns:1fr;gap:34px}
 }
 
-// ── Layout helpers ──────────────────────────────────────────────────────────
+/* ---------- roof install (real photo) ---------- */
+.about-media .install-stage{position:relative;width:100%;aspect-ratio:16/9;
+  border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);
+  border:1px solid rgba(255,255,255,.08);background:#1c1f22}
+.install-stage .install-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.roof3d-replay{position:absolute;right:14px;bottom:14px;z-index:2;
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:"Archivo";font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--navy-900);background:var(--cream);border:none;border-radius:999px;
+  padding:9px 16px;cursor:pointer;opacity:0;transform:translateY(8px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease),background .25s var(--ease)}
+.roof3d-replay.show{opacity:1;transform:none}
+.roof3d-replay:hover{background:var(--white)}
+.roof3d-replay svg{width:15px;height:15px}
+.roof-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
+  width:84px;height:84px;border-radius:50%;border:none;cursor:pointer;
+  display:grid;place-items:center;color:var(--navy-900);
+  background:var(--cream);box-shadow:0 10px 34px rgba(0,0,0,.4);
+  transition:opacity .35s var(--ease),transform .3s var(--ease),background .25s var(--ease)}
+.roof-play svg{width:34px;height:34px;margin-left:4px}
+.roof-play:hover{background:var(--white);transform:translate(-50%,-50%) scale(1.06)}
+.roof-play.hide{opacity:0;transform:translate(-50%,-50%) scale(.8);pointer-events:none}
 
-function TweakSection({ label, children }) {
-  return (
-    <>
-      <div className="twk-sect">{label}</div>
-      {children}
-    </>
-  );
+/* ---------- process ---------- */
+.process{background:var(--white);position:relative;overflow:hidden}
+.process h2{color:var(--navy)}
+.process .lead{color:var(--ink-soft)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:50px;counter-reset:step}
+.step{position:relative;padding-top:30px}
+.step::before{counter-increment:step;content:"0" counter(step);font-family:"Archivo";font-weight:900;font-size:60px;color:var(--navy-faint);line-height:.7;position:absolute;top:-8px;left:0}
+.step .st-line{height:2px;background:var(--navy-line);margin:14px 0 18px;position:relative}
+.step .st-line::after{content:"";position:absolute;left:0;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--navy)}
+.step h4{color:var(--navy);font-size:19px;margin-bottom:8px}
+.step p{color:var(--ink-soft);font-size:15px}
+
+/* ---------- reviews ---------- */
+.reviews{background:var(--white);overflow:hidden}
+.elfsight-reviews{margin-top:42px;min-height:220px}
+.rev-marquee{margin-top:46px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.rev-track{display:flex;gap:22px;width:max-content;align-items:stretch;
+  animation:rev-pan 52s linear infinite}
+.rev-marquee:hover .rev-track{animation-play-state:paused}
+@keyframes rev-pan{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.rev-card{flex:0 0 384px;width:384px;display:flex;flex-direction:column;
+  background:var(--white);border:1px solid var(--navy-line);border-radius:var(--radius-lg);
+  padding:30px 30px 26px;box-shadow:var(--shadow-sm)}
+.rev-card .rstars{color:var(--navy);letter-spacing:3px;font-size:16px;margin-bottom:16px}
+.rev-card p{font-size:16px;line-height:1.62;color:var(--ink);text-wrap:pretty}
+.rev-card .rwho{margin-top:auto;padding-top:22px;display:flex;align-items:center;gap:12px}
+.rev-card .rav{flex:none;width:42px;height:42px;border-radius:50%;background:var(--cream-300);color:var(--navy);display:grid;place-items:center;font-family:"Archivo";font-weight:800;font-size:16px}
+.rev-card .rwho b{display:block;font-size:15px;color:var(--navy);font-weight:800}
+.rev-card .rwho span{font-size:12.5px;color:var(--ink-soft)}
+.rev-cta{display:flex;justify-content:center;margin-top:42px}
+.btn-google{display:inline-flex;align-items:center;gap:11px;background:var(--white);
+  border:1px solid var(--navy-line);border-radius:999px;padding:14px 26px;
+  font-family:"Archivo";font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--navy);box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s var(--ease)}
+.btn-google:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--navy)}
+.btn-google svg{width:20px;height:20px;flex:none}
+@media (prefers-reduced-motion: reduce){
+  .rev-track{animation:none}
+  .rev-marquee{overflow-x:auto}
+}
+.rev-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px;margin-top:46px;align-items:start}
+.rev{background:var(--white);border:1px solid var(--navy-line);border-radius:var(--radius-lg);padding:28px 26px;box-shadow:var(--shadow-sm)}
+.rev.lead-rev{background:var(--navy);color:var(--on-navy);border-color:transparent;grid-row:span 1}
+.rev .stars{color:var(--navy);letter-spacing:3px;font-size:16px;margin-bottom:14px}
+.rev.lead-rev .stars{color:var(--cream)}
+.rev p{font-size:16px;line-height:1.62;color:var(--ink);text-wrap:pretty}
+.rev.lead-rev p{color:var(--on-navy);font-size:19px;line-height:1.6}
+.rev .who{margin-top:20px;display:flex;align-items:center;gap:12px}
+.rev .av{width:42px;height:42px;border-radius:50%;background:var(--cream-300);color:var(--navy);display:grid;place-items:center;font-family:"Archivo";font-weight:800;font-size:16px}
+.rev.lead-rev .av{background:var(--cream);color:var(--navy-900)}
+.rev .who b{display:block;font-size:15px;color:var(--navy);font-weight:800}
+.rev.lead-rev .who b{color:var(--white)}
+.rev .who span{font-size:12.5px;color:var(--ink-soft)}
+.rev.lead-rev .who span{color:var(--on-navy-soft)}
+.placeholder-note{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);opacity:.6;margin-top:14px;font-family:"Archivo";font-weight:600}
+
+/* ---------- faq ---------- */
+.faq{background:var(--cream)}
+.faq-list{max-width:840px;margin:44px auto 0}
+.faq-item{border-bottom:1px solid var(--navy-line)}
+.faq-item:first-child{border-top:1px solid var(--navy-line)}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:26px 6px;font-family:"Archivo";font-weight:800;font-size:clamp(17px,1.9vw,21px);color:var(--navy);
+  transition:color .2s var(--ease)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:hover{color:var(--navy-700)}
+.faq-ic{position:relative;flex:none;width:22px;height:22px;transition:transform .3s var(--ease)}
+.faq-ic::before,.faq-ic::after{content:"";position:absolute;background:var(--navy);border-radius:2px}
+.faq-ic::before{left:0;top:50%;width:100%;height:2.5px;transform:translateY(-50%)}
+.faq-ic::after{top:0;left:50%;height:100%;width:2.5px;transform:translateX(-50%)}
+.faq-item[open] .faq-ic{transform:rotate(135deg)}
+.faq-a{padding:0 6px 26px;max-width:66ch}
+.faq-a p{color:var(--ink-soft);font-size:16px;line-height:1.62;text-wrap:pretty}
+.faq-item[open] .faq-a{animation:faq-reveal .35s var(--ease)}
+@keyframes faq-reveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---------- gallery ---------- */
+.gallery{background:var(--cream)}
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:14px;margin-top:42px}
+.gal-grid img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);display:block}
+.gal-grid .tall{grid-row:span 2}
+.gal-grid .wide{grid-column:span 2}
+
+/* ---------- service area ---------- */
+.area{background:var(--cream)}
+.area-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,64px);align-items:center}
+.area .lead{margin-top:18px}
+.area-regions{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.region{background:var(--white);border:1px solid var(--navy-line);border-radius:var(--radius-lg);
+  padding:28px 28px 30px;box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.region:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.region h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:21px;color:var(--navy);
+  display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.region h3::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--navy);flex:none}
+.region p{color:var(--ink-soft);font-size:15.5px;line-height:1.6;text-wrap:pretty}
+.region-cta{background:var(--navy);border-color:transparent}
+.region-cta h3{color:var(--cream)}
+.region-cta h3::before{background:var(--cream)}
+.region-cta p{color:var(--on-navy-soft)}
+.region-cta a{color:var(--cream);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.region-cta a:hover{color:var(--white)}
+.area-cols{columns:2;column-gap:30px;margin-top:26px}
+.area-cols li{break-inside:avoid;padding:7px 0;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:10px;font-size:15.5px}
+.area-cols li svg{width:15px;height:15px;color:var(--navy);flex:none}
+.area-map{aspect-ratio:1/1.02;background:var(--white);border:1px solid var(--navy-line);border-radius:var(--radius-lg);display:grid;place-items:center;padding:40px;box-shadow:var(--shadow-sm);position:relative}
+.area-map svg{width:100%;height:auto;color:var(--navy)}
+.area-map .pin{position:absolute;font-family:"Archivo";font-weight:800;font-size:13px;color:var(--white);background:var(--navy);padding:6px 12px;border-radius:40px;box-shadow:var(--shadow-sm)}
+
+/* ---------- contact / quote ---------- */
+.contact{background:var(--navy);color:var(--on-navy);position:relative;overflow:hidden}
+.contact::before{content:"";position:absolute;inset:0;background:radial-gradient(90% 80% at 10% 0%,rgba(32,86,115,.5),transparent 55%)}
+.contact-grid{position:relative;display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(36px,5vw,72px);align-items:start}
+.contact h2{color:var(--white);font-size:clamp(30px,4.4vw,50px)}
+.contact .lead{color:var(--on-navy-soft);margin-top:18px}
+.contact-points{margin-top:32px;display:flex;flex-direction:column;gap:18px}
+.cpoint{display:flex;gap:15px;align-items:flex-start}
+.cpoint .ci{flex:none;width:46px;height:46px;border-radius:var(--radius);background:rgba(255,255,255,.08);color:var(--cream);display:grid;place-items:center}
+.cpoint .ci svg{width:22px;height:22px}
+.cpoint b{display:block;color:var(--white);font-family:"Archivo";font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.cpoint a,.cpoint span{font-size:19px;color:var(--on-navy);font-weight:600}
+.cpoint .big{font-family:"Archivo";font-weight:800;font-size:24px;color:var(--white)}
+.contact-phone{display:inline-flex;align-items:center;gap:13px;margin-top:32px;font-family:"Archivo";font-weight:800;font-size:clamp(20px,2.4vw,26px);color:var(--white);transition:opacity .2s var(--ease)}
+.contact-phone:hover{opacity:.82}
+.contact-phone svg{width:23px;height:23px;color:var(--cream);flex:none}
+.contact-meta{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:15px}
+.contact-meta li{display:flex;align-items:center;gap:13px;font-size:17px;color:var(--on-navy);font-weight:600}
+.contact-meta li svg{width:20px;height:20px;color:var(--cream);flex:none}
+.contact-meta a{color:var(--on-navy);transition:color .2s var(--ease)}
+.contact-meta a:hover{color:var(--white)}
+
+.form-card{background:var(--white);border-radius:var(--radius-lg);padding:clamp(28px,3.4vw,44px);box-shadow:var(--shadow-lg);color:var(--ink)}
+.form-card h3{font-size:24px;color:var(--navy)}
+.form-card .sub{color:var(--ink-soft);font-size:15px;margin-top:6px;margin-bottom:24px}
+.field{margin-bottom:20px}
+.field label{display:block;font-family:"Hanken Grotesk",system-ui,sans-serif;font-weight:700;font-size:14px;letter-spacing:0;text-transform:none;color:var(--navy-900);margin-bottom:8px}
+.field label .req{color:var(--navy)}
+.field input,.field select,.field textarea{
+  width:100%;padding:13px 15px;border:1.5px solid var(--navy-line);border-radius:var(--radius);background:var(--white);
+  font-family:inherit;font-size:16px;color:var(--ink);transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--navy-600);box-shadow:0 0 0 4px rgba(32,86,115,.12)}
+.field textarea{resize:vertical;min-height:96px}
+.field.err input,.field.err select,.field.err textarea{border-color:#c0392b;box-shadow:0 0 0 4px rgba(192,57,43,.1)}
+.field .emsg{display:none;color:#c0392b;font-size:12.5px;margin-top:5px;font-weight:600}
+.field.err .emsg{display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-card .btn{width:100%;margin-top:6px}
+.form-fine{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:14px}
+.form-success{display:none;text-align:center;padding:30px 10px}
+.form-success.show{display:block}
+.form-success .ck{width:64px;height:64px;border-radius:50%;background:var(--navy);color:var(--cream);display:grid;place-items:center;margin:0 auto 18px}
+.form-success .ck svg{width:32px;height:32px}
+.form-success h3{margin-bottom:8px}
+.form-success p{color:var(--ink-soft)}
+
+/* ---------- footer ---------- */
+.footer{background:var(--navy-900);color:var(--on-navy-soft);padding-block:clamp(48px,6vw,72px) 0}
+.foot-grid{display:grid;grid-template-columns:1.4fr .85fr .85fr 1.2fr;gap:40px}
+.foot-brand img{height:104px;margin-bottom:20px}
+.foot-brand p{font-size:15px;max-width:34ch}
+.foot-social{display:flex;gap:12px;margin-top:20px}
+.foot-social a{width:40px;height:40px;border-radius:var(--radius);border:1px solid rgba(169,194,209,.25);display:grid;place-items:center;color:var(--on-navy);transition:.25s var(--ease)}
+.foot-social a:hover{background:var(--cream);color:var(--navy-900);border-color:var(--cream)}
+.foot-social svg{width:18px;height:18px}
+.foot-col h4{color:var(--white);font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;font-family:"Archivo"}
+.foot-col li{margin-bottom:11px}
+.foot-col a{font-size:15px;transition:color .2s}
+.foot-col a:hover{color:var(--white)}
+.foot-contact li{display:flex;gap:10px;align-items:flex-start;font-size:15px;margin-bottom:13px}
+.foot-contact a[href^="tel"]{white-space:nowrap}
+.foot-contact a[href^="mailto"]{word-break:break-all}
+.foot-contact svg{width:16px;height:16px;color:var(--cream);flex:none;margin-top:4px}
+.foot-bottom{border-top:1px solid rgba(169,194,209,.16);margin-top:48px;padding-block:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13.5px}
+.foot-bottom a:hover{color:var(--on-navy)}
+
+/* ---------- reveal animation ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ============================================================
+   FULL-SCREEN HERO (Hugo-style) - photo bg, centered logo
+   ============================================================ */
+.hero-screen{
+  position:relative;min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;
+  background:url("assets/hero.jpg") center 32%/cover no-repeat;
+  color:#fff;overflow:hidden;
+}
+.hero-screen::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(8,18,26,.66),rgba(8,18,26,.16) 22%,rgba(8,18,26,.20) 58%,rgba(8,18,26,.62));}
+.hero-screen::after{content:"";position:absolute;inset:0;z-index:1;
+  background:radial-gradient(58% 46% at 50% 47%,rgba(8,18,26,.5),transparent 72%);}
+.hero-screen > *{position:relative;z-index:2}
+
+/* nav */
+.hnav{display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:26px clamp(20px,5vw,64px);position:relative;z-index:20}
+.hnav-links{display:flex;gap:clamp(20px,3vw,44px)}
+.hnav a{font-family:"Archivo",sans-serif;font-weight:700;font-size:15px;letter-spacing:.18em;
+  text-transform:uppercase;color:#fff}
+.hnav-links a{position:relative;padding:6px 2px}
+.hnav-links a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:#fff;transition:width .3s var(--ease)}
+.hnav-links a:hover::after{width:100%}
+.hnav-right{display:flex;align-items:center;gap:18px}
+.hnav-soc{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.5);color:#fff;transition:.25s var(--ease)}
+.hnav-soc svg{width:17px;height:17px}
+.hnav-soc:hover{background:#fff;color:var(--navy);border-color:#fff}
+.hnav-btn{font-family:"Archivo",sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:#fff;border:1.5px solid rgba(255,255,255,.6);border-radius:40px;
+  padding:13px 26px;transition:.25s var(--ease);white-space:nowrap}
+.hnav-btn:hover{background:#fff;color:var(--navy)}
+
+/* center */
+.hero-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:30px 20px clamp(110px,16vh,140px);gap:clamp(28px,4vw,42px)}
+.hero-logo{width:min(440px,64vw);height:auto;filter:drop-shadow(0 14px 46px rgba(0,0,0,.5))}
+.hero-cta{font-family:"Archivo",sans-serif;font-weight:700;font-size:15px;letter-spacing:.18em;
+  text-transform:uppercase;color:#fff;border:1.5px solid rgba(255,255,255,.78);
+  padding:18px 40px;transition:.3s var(--ease)}
+.hero-cta:hover{background:#fff;color:var(--navy);transform:translateY(-2px)}
+
+/* scroll cue */
+.hero-scroll{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:9px;color:#fff;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:12px;letter-spacing:.28em;
+  text-transform:uppercase;opacity:.92}
+.hero-scroll svg{width:22px;height:22px;animation:scrollBob 1.9s var(--ease) infinite}
+@keyframes scrollBob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){.hero-scroll svg{animation:none}}
+
+/* bottom trust bar */
+.hero-bar{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  padding:16px clamp(16px,4vw,48px);
+  background:var(--navy-900);
+  border-top:1px solid rgba(255,255,255,.12)}
+.hero-bar .hb{display:flex;align-items:center;gap:10px;
+  padding:5px clamp(16px,2.4vw,34px);
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:#fff;white-space:nowrap}
+.hero-bar .hb + .hb{border-left:1px solid rgba(255,255,255,.22)}
+.hero-bar svg{width:18px;height:18px;color:#fff;flex:none}
+@media (max-width:860px){
+  .hero-bar{gap:6px 0;padding:14px 16px}
+  .hero-bar .hb{font-size:12px;padding:5px 16px}
+  .hero-bar .hb + .hb{border-left:0}
 }
 
-function TweakRow({ label, value, children, inline = false }) {
-  return (
-    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
-      <div className="twk-lbl">
-        <span>{label}</span>
-        {value != null && <span className="twk-val">{value}</span>}
-      </div>
-      {children}
-    </div>
-  );
+/* mobile nav */
+.hnav-burger{display:none;flex-direction:column;gap:5px;background:none;border:0;padding:8px;z-index:4}
+.hnav-burger span{width:26px;height:2.5px;background:#fff;border-radius:2px;transition:.3s var(--ease)}
+.hnav-burger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.hnav-burger.active span:nth-child(2){opacity:0}
+.hnav-burger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.hnav-mobile{display:none;position:absolute;top:84px;left:0;right:0;z-index:3;flex-direction:column;
+  background:rgba(8,18,26,.96);backdrop-filter:blur(8px);padding:14px clamp(20px,5vw,64px) 26px}
+.hnav-mobile.open{display:flex}
+.hnav-mobile a{font-family:"Archivo",sans-serif;font-weight:700;font-size:15px;letter-spacing:.16em;
+  text-transform:uppercase;color:#fff;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.hnav-mobile .hnav-btn{margin-top:16px;text-align:center;border:1.5px solid rgba(255,255,255,.6)}
+@media (max-width:860px){
+  .hnav-links,.hnav-right{display:none}
+  .hnav-burger{display:flex}
+  .hnav{padding:20px clamp(20px,5vw,64px)}
+  .hnav-mobile{top:72px}
 }
 
-// ── Controls ────────────────────────────────────────────────────────────────
-
-function TweakSlider({ label, value, min = 0, max = 100, step = 1, unit = '', onChange }) {
-  return (
-    <TweakRow label={label} value={`${value}${unit}`}>
-      <input type="range" className="twk-slider" min={min} max={max} step={step}
-             value={value} onChange={(e) => onChange(Number(e.target.value))} />
-    </TweakRow>
-  );
+/* ---------- responsive ---------- */
+@media (max-width:1000px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-media{order:-1}
+  .about-grid,.area-grid,.contact-grid,.ins-card{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .area-regions{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr);gap:30px}
+  .rev-grid{grid-template-columns:1fr 1fr}
+  .rev.lead-rev{grid-column:span 2}
+  .gal-grid{grid-template-columns:repeat(2,1fr)}
+  .ins-actions{margin-top:6px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  body{font-size:17px}
+  .nav-links,.nav-phone span.np-txt,.topbar .tb-badges{display:none}
+  .burger{display:flex}
+  .nav-links{position:fixed;inset:78px 0 auto 0;flex-direction:column;background:var(--paper);padding:22px var(--gutter) 30px;gap:6px;box-shadow:var(--shadow-md);transform:translateY(-130%);transition:transform .4s var(--ease);border-bottom:1px solid var(--navy-line)}
+  .nav-links.open{transform:none;display:flex}
+  .nav-links a{width:100%;padding:14px 0;border-bottom:1px solid var(--navy-faint);font-size:17px}
+  .nav-links a::after{display:none}
+  .nav-links .btn{margin-top:12px;width:100%}
+  .hero-badge{left:0}
+  .svc-grid{grid-template-columns:1fr}
+  .steps,.rev-grid,.gal-grid,.foot-grid,.form-row,.area-cols,.why-list,.area-regions{grid-template-columns:1fr}
+  .rev.lead-rev{grid-column:span 1}
+  .area-cols{columns:1}
+  .foot-bottom{flex-direction:column}
+  .burger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .burger.active span:nth-child(2){opacity:0}
+  .burger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
 }
 
-function TweakToggle({ label, value, onChange }) {
-  return (
-    <div className="twk-row twk-row-h">
-      <div className="twk-lbl"><span>{label}</span></div>
-      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
-              role="switch" aria-checked={!!value}
-              onClick={() => onChange(!value)}><i /></button>
-    </div>
-  );
+/* ============================================================
+   SUB-PAGE HEADER (solid dark, centered logo) + PAGE HERO
+   ============================================================ */
+.subhead{position:sticky;top:0;z-index:60;background:var(--navy-900);
+  border-bottom:1px solid rgba(255,255,255,.08)}
+.subnav{position:relative;max-width:1320px;margin:0 auto;
+  display:flex;align-items:center;
+  padding:0 clamp(20px,4vw,52px);min-height:78px}
+.subnav-left{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:flex-end;gap:clamp(18px,2.4vw,38px)}
+.subnav-right{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:flex-start;gap:clamp(14px,2vw,30px)}
+.subnav a.snl{font-family:"Archivo",sans-serif;font-weight:600;font-size:13px;letter-spacing:.13em;
+  text-transform:uppercase;color:rgba(255,255,255,.82);position:relative;padding:6px 0;white-space:nowrap;
+  transition:color .22s var(--ease)}
+.subnav a.snl:hover{color:#fff}
+.subnav a.snl::after{content:"";position:absolute;left:0;bottom:-1px;height:1.5px;width:0;
+  background:var(--cream);transition:width .28s var(--ease)}
+.subnav a.snl:hover::after{width:100%}
+.subnav a.snl.active{color:#fff}
+.subnav a.snl.active::after{width:100%}
+
+/* services dropdown */
+.snl-drop{position:relative}
+.snl-drop > a{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.snl-drop > a svg{width:12px;height:12px;transition:transform .25s var(--ease)}
+.snl-drop:hover > a svg{transform:rotate(180deg)}
+.snl-menu{position:absolute;left:50%;top:calc(100% + 14px);transform:translateX(-50%) translateY(8px);
+  min-width:230px;background:var(--navy-800);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:8px;
+  opacity:0;visibility:hidden;transition:opacity .22s var(--ease),transform .22s var(--ease),visibility .22s;transition-delay:.4s}
+.snl-drop:hover .snl-menu,.snl-drop:focus-within .snl-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);transition-delay:0s}
+.snl-menu::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
+.snl-menu a{display:block;font-family:"Hanken Grotesk",sans-serif;font-weight:600;
+  text-transform:none;letter-spacing:0;font-size:15px;color:var(--on-navy);
+  padding:11px 14px;border-radius:var(--radius);transition:background .2s var(--ease),color .2s var(--ease)}
+.subnav .snl-menu a::after{display:none}
+.snl-menu a:hover{background:rgba(255,255,255,.07);color:#fff}
+
+.subnav-logo{flex:0 0 auto;margin:0 clamp(24px,3.4vw,54px);display:flex;align-items:center}
+.subnav-logo img{height:76px;width:auto;display:block}
+.subnav-soc{display:flex;align-items:center;gap:14px}
+.subnav-soc a{display:grid;place-items:center;color:rgba(255,255,255,.8);transition:.22s var(--ease)}
+.subnav-soc a:hover{color:#fff}
+.subnav-soc svg{width:18px;height:18px}
+.subnav-btn{font-family:"Archivo",sans-serif;font-weight:700;font-size:12px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--navy-900);background:var(--white);
+  border-radius:var(--radius);padding:12px 20px;transition:.22s var(--ease);white-space:nowrap}
+.subnav-btn:hover{background:var(--cream);transform:translateY(-1px)}
+
+/* mobile burger for subnav */
+.subnav-burger{display:none;flex-direction:column;gap:5px;background:none;border:0;padding:8px;margin-left:auto}
+.subnav-burger span{width:26px;height:2.5px;background:#fff;border-radius:2px;transition:.3s var(--ease)}
+.subnav-burger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.subnav-burger.active span:nth-child(2){opacity:0}
+.subnav-burger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.subnav-mobile{display:none;flex-direction:column;background:var(--navy-800);
+  border-top:1px solid rgba(255,255,255,.08);padding:10px clamp(20px,5vw,52px) 22px}
+.subnav-mobile.open{display:flex}
+.subnav-mobile a{font-family:"Archivo",sans-serif;font-weight:700;font-size:14px;letter-spacing:.14em;
+  text-transform:uppercase;color:#fff;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.subnav-mobile .subnav-btn{margin-top:16px;text-align:center}
+
+/* page hero band */
+.page-hero{position:relative;background:var(--navy-900);color:#fff;overflow:hidden;
+  text-align:center;padding-block:clamp(72px,13vw,138px)}
+.page-hero::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 100% at 50% -10%,rgba(22,69,94,.4),transparent 60%)}
+.page-hero .wrap{position:relative}
+.page-hero .ph-eyebrow{justify-content:center;color:var(--cream);margin-bottom:22px}
+.page-hero .ph-eyebrow::before,.page-hero .ph-eyebrow::after{content:"";width:30px;height:2px;background:rgba(244,238,225,.5)}
+.page-hero h1{font-family:"Archivo",sans-serif;font-weight:900;color:#fff;
+  font-size:clamp(32px,5vw,60px);letter-spacing:.005em;text-transform:uppercase;line-height:1.04}
+.page-hero p{max-width:48ch;margin:26px auto 0;color:var(--on-navy-soft);
+  font-size:clamp(17px,2vw,20px);line-height:1.62;text-wrap:pretty}
+
+@media (max-width:980px){
+  .subnav-left,.subnav-right{display:none}
+  .subnav-burger{display:flex}
+  .subnav-logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0}
 }
 
-function TweakRadio({ label, value, options, onChange }) {
-  const trackRef = React.useRef(null);
-  const [dragging, setDragging] = React.useState(false);
-  // The active value is read by pointer-move handlers attached for the lifetime
-  // of a drag — ref it so a stale closure doesn't fire onChange for every move.
-  const valueRef = React.useRef(value);
-  valueRef.current = value;
-
-  // Segments wrap mid-word once per-segment width runs out. The track is
-  // ~248px (280 panel − 28 body pad − 4 seg pad), each button loses 12px
-  // to its own padding, and 11.5px system-ui averages ~6.3px/char — so 2
-  // options fit ~16 chars each, 3 fit ~10. Past that (or >3 options), fall
-  // back to a dropdown rather than wrap.
-  const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
-  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
-  const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
-  if (!fitsAsSegments) {
-    // <select> emits strings — map back to the original option value so the
-    // fallback stays type-preserving (numbers, booleans) like the segment path.
-    const resolve = (s) => {
-      const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
-      return m === undefined ? s : typeof m === 'object' ? m.value : m;
-    };
-    return <TweakSelect label={label} value={value} options={options}
-                        onChange={(s) => onChange(resolve(s))} />;
-  }
-  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
-  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
-  const n = opts.length;
-
-  const segAt = (clientX) => {
-    const r = trackRef.current.getBoundingClientRect();
-    const inner = r.width - 4;
-    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
-    return opts[Math.max(0, Math.min(n - 1, i))].value;
-  };
-
-  const onPointerDown = (e) => {
-    setDragging(true);
-    const v0 = segAt(e.clientX);
-    if (v0 !== valueRef.current) onChange(v0);
-    const move = (ev) => {
-      if (!trackRef.current) return;
-      const v = segAt(ev.clientX);
-      if (v !== valueRef.current) onChange(v);
-    };
-    const up = () => {
-      setDragging(false);
-      window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
-    };
-    window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
-  };
-
-  return (
-    <TweakRow label={label}>
-      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown}
-           className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
-        <div className="twk-seg-thumb"
-             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`,
-                      width: `calc((100% - 4px) / ${n})` }} />
-        {opts.map((o) => (
-          <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>
-            {o.label}
-          </button>
-        ))}
-      </div>
-    </TweakRow>
-  );
+/* ---------- who are we (about) ---------- */
+.whoweare{background:var(--white)}
+.wa-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,6vw,84px);align-items:start}
+.wa-eyebrow{font-family:"Archivo",sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+.wa-title{font-family:"Archivo",sans-serif;font-weight:900;color:var(--navy);
+  text-transform:uppercase;font-size:clamp(30px,4.2vw,50px);line-height:1.02;
+  letter-spacing:-.01em;margin:20px 0 28px}
+.wa-copy{display:flex;flex-direction:column;gap:20px;max-width:60ch}
+.wa-copy p{color:var(--ink-soft);font-size:17px;line-height:1.66;text-wrap:pretty}
+.wa-card{background:var(--navy-900);color:#fff;border-radius:22px;
+  padding:clamp(30px,3.4vw,46px) clamp(28px,3vw,44px);box-shadow:var(--shadow-lg)}
+.wa-list{display:flex;flex-direction:column;gap:30px}
+.wa-item{display:grid;grid-template-columns:auto 1fr;gap:13px 14px}
+.wa-item .wa-ck{grid-row:1;grid-column:1;width:22px;height:22px;color:var(--cream);margin-top:1px}
+.wa-item h4{grid-row:1;grid-column:2;font-family:"Archivo",sans-serif;font-weight:800;
+  font-size:16.5px;letter-spacing:.05em;text-transform:uppercase;color:#fff;margin:0;align-self:center}
+.wa-item p{grid-row:2;grid-column:2;color:var(--on-navy-soft);font-size:15.5px;line-height:1.6;text-wrap:pretty}
+@media (max-width:920px){
+  .wa-grid{grid-template-columns:1fr;gap:38px}
 }
 
-function TweakSelect({ label, value, options, onChange }) {
-  return (
-    <TweakRow label={label}>
-      <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
-        {options.map((o) => {
-          const v = typeof o === 'object' ? o.value : o;
-          const l = typeof o === 'object' ? o.label : o;
-          return <option key={v} value={v}>{l}</option>;
-        })}
-      </select>
-    </TweakRow>
-  );
+/* ---------- stats band (dark) ---------- */
+.stats-band{background:var(--navy-900);color:#fff;padding-block:clamp(46px,6vw,72px)}
+.stats-row{display:flex;justify-content:center;align-items:flex-start;
+  gap:clamp(40px,8vw,120px);flex-wrap:wrap;text-align:center}
+.stat-i .stat-n{font-family:"Archivo",sans-serif;font-weight:900;color:#fff;
+  font-size:clamp(40px,5vw,60px);line-height:1;letter-spacing:-.01em}
+.stat-i .stat-n .star{color:var(--cream)}
+.stat-i .stat-l{margin-top:12px;font-family:"Archivo",sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--on-navy-soft)}
+
+/* ---------- process timeline (about) ---------- */
+.aproc{background:var(--white);text-align:center}
+.aproc .ap-eyebrow{font-family:"Archivo",sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+.aproc h2{font-family:"Archivo",sans-serif;font-weight:900;color:var(--navy);
+  text-transform:uppercase;font-size:clamp(32px,4.6vw,52px);margin:16px 0 18px;letter-spacing:-.01em}
+.aproc .ap-sub{color:var(--ink-soft);font-size:clamp(17px,2vw,20px);max-width:54ch;margin:0 auto}
+.proc-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  margin-top:clamp(46px,6vw,72px)}
+.proc-step{position:relative;padding:0 clamp(10px,1.4vw,22px);text-align:center}
+.proc-top{position:relative;height:58px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.proc-num{position:relative;z-index:2;width:58px;height:58px;border-radius:50%;
+  background:var(--navy-900);color:#fff;display:grid;place-items:center;
+  font-family:"Archivo",sans-serif;font-weight:800;font-size:16px}
+.proc-step:not(:last-child) .proc-top::after{content:"";position:absolute;z-index:1;
+  left:50%;top:50%;width:100%;height:1.5px;background:var(--navy-line)}
+.proc-step h4{font-family:"Archivo",sans-serif;font-weight:800;font-size:16px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--navy);margin-bottom:12px}
+.proc-step p{color:var(--ink-soft);font-size:15.5px;line-height:1.6;text-wrap:pretty}
+@media (max-width:820px){
+  .proc-timeline{grid-template-columns:1fr 1fr;gap:44px 0}
+  .proc-step:nth-child(2n) .proc-top::after{display:none}
+}
+@media (max-width:480px){
+  .proc-timeline{grid-template-columns:1fr;gap:40px 0}
+  .proc-step .proc-top::after{display:none}
 }
 
-function TweakText({ label, value, placeholder, onChange }) {
-  return (
-    <TweakRow label={label}>
-      <input className="twk-field" type="text" value={value} placeholder={placeholder}
-             onChange={(e) => onChange(e.target.value)} />
-    </TweakRow>
-  );
+/* ---------- final CTA (about) ---------- */
+.endcta{background:var(--navy);color:#fff;text-align:center;padding-block:clamp(72px,11vw,120px)}
+.endcta h2{font-family:"Archivo",sans-serif;font-weight:900;color:#fff;
+  text-transform:uppercase;font-size:clamp(34px,5vw,58px);letter-spacing:-.01em;line-height:1.02}
+.endcta p{max-width:46ch;margin:22px auto 0;color:var(--on-navy-soft);
+  font-size:clamp(17px,2vw,20px);line-height:1.62;text-wrap:pretty}
+.endcta .btn{margin-top:38px}
+
+/* ---------- financing ---------- */
+.fin{background:var(--white);text-align:center}
+.fin-intro{max-width:58ch;margin:0 auto;color:var(--ink-soft);
+  font-size:clamp(18px,2.1vw,22px);line-height:1.6;text-wrap:pretty}
+.fin-list{display:flex;flex-direction:column;align-items:center;gap:clamp(22px,3vw,32px);
+  margin-top:clamp(40px,5vw,64px)}
+.fin-item{display:inline-flex;align-items:center;gap:15px;
+  font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;
+  letter-spacing:.045em;font-size:clamp(16px,1.9vw,20px);color:var(--navy);text-align:left}
+.fin-item svg{width:24px;height:24px;color:var(--navy);flex:none}
+.fin-note{margin-top:clamp(40px,5vw,60px);color:var(--ink-soft);font-size:15px;max-width:54ch;
+  margin-left:auto;margin-right:auto}
+
+/* ---------- service: split intro ---------- */
+.split{background:var(--white)}
+.split-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(40px,6vw,84px);align-items:center}
+.split-media{order:2}
+.split-title{font-family:"Archivo",sans-serif;font-weight:900;color:var(--navy);
+  text-transform:uppercase;font-size:clamp(28px,3.9vw,46px);line-height:1.04;
+  letter-spacing:-.01em;margin-bottom:24px}
+.split-copy{display:flex;flex-direction:column;gap:18px;max-width:54ch}
+.split-copy p{color:var(--ink-soft);font-size:17px;line-height:1.66;text-wrap:pretty}
+.split-copy strong{color:var(--navy);font-weight:700}
+.split-media img{width:100%;height:clamp(340px,40vw,500px);border-radius:22px;
+  box-shadow:var(--shadow-lg);display:block;object-fit:cover}
+.split-actions{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+@media (max-width:920px){
+  .split-grid{grid-template-columns:1fr;gap:34px}
+  .split-media{order:-1}
 }
 
-function TweakNumber({ label, value, min, max, step = 1, unit = '', onChange }) {
-  const clamp = (n) => {
-    if (min != null && n < min) return min;
-    if (max != null && n > max) return max;
-    return n;
-  };
-  const startRef = React.useRef({ x: 0, val: 0 });
-  const onScrubStart = (e) => {
-    e.preventDefault();
-    startRef.current = { x: e.clientX, val: value };
-    const decimals = (String(step).split('.')[1] || '').length;
-    const move = (ev) => {
-      const dx = ev.clientX - startRef.current.x;
-      const raw = startRef.current.val + dx * step;
-      const snapped = Math.round(raw / step) * step;
-      onChange(clamp(Number(snapped.toFixed(decimals))));
-    };
-    const up = () => {
-      window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
-    };
-    window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
-  };
-  return (
-    <div className="twk-num">
-      <span className="twk-num-lbl" onPointerDown={onScrubStart}>{label}</span>
-      <input type="number" value={value} min={min} max={max} step={step}
-             onChange={(e) => onChange(clamp(Number(e.target.value)))} />
-      {unit && <span className="twk-num-unit">{unit}</span>}
-    </div>
-  );
+/* ---------- small phones ---------- */
+@media (max-width:600px){
+  .whychoose{grid-template-columns:1fr;gap:30px}
+  .wc-card{padding:22px 22px;gap:18px}
+  .rev-card{flex:0 0 296px;width:296px;padding:26px 24px}
+  .rev-card p{font-size:15px}
+  .form-card{padding:24px 20px}
+  .contact-phone{font-size:24px}
+  .contact-meta li{font-size:15.5px;word-break:break-word}
+  .faq-item summary{padding:22px 2px;gap:16px}
+  .sec-head{gap:14px}
 }
 
-// Relative-luminance contrast pick — checkmarks drawn over a swatch need to
-// read on both #111 and #fafafa without per-option configuration. Hex input
-// only (#rgb / #rrggbb); named or rgb()/hsl() colors fall through to "light".
-function __twkIsLight(hex) {
-  const h = String(hex).replace('#', '');
-  const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
-  const n = parseInt(x.slice(0, 6), 16);
-  if (Number.isNaN(n)) return true;
-  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
-  return r * 299 + g * 587 + b * 114 > 148000;
+/* ---------- city pages ---------- */
+.area-chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;max-width:900px;margin-inline:auto}
+.area-chips li{background:var(--white);border:1px solid var(--navy-line);border-radius:40px;padding:11px 20px;font-weight:600;font-size:15px;color:var(--navy);box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:9px}
+.area-chips li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--navy);flex:none}
+.foot-areas{border-top:1px solid rgba(255,255,255,.1);margin-top:clamp(34px,4vw,48px);padding-top:26px}
+.foot-areas h4{color:var(--white);font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;font-family:"Archivo"}
+.foot-area-links{display:flex;flex-wrap:wrap;gap:10px 22px}
+.foot-area-links a{font-size:15px;transition:color .2s}
+.foot-area-links a:hover{color:var(--white)}
+.region-link{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-weight:700;font-size:14.5px;color:var(--navy);text-decoration:none;letter-spacing:.01em}
+.region-link::after{content:"→";transition:transform .25s var(--ease)}
+.region:hover .region-link::after{transform:translateX(4px)}
+
+/* ---------- service area page ---------- */
+.ac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ac{background:var(--white);border:1px solid var(--navy-line);border-radius:var(--radius-lg);padding:32px 32px 28px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.ac:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.ac h3{font-family:"Archivo",sans-serif;font-weight:900;text-transform:uppercase;font-size:20px;color:var(--navy);letter-spacing:-.01em;margin-bottom:12px}
+.ac p{color:var(--ink-soft);font-size:15.5px;line-height:1.62;text-wrap:pretty;flex:1}
+.ac-link{margin-top:22px;display:inline-flex;align-items:center;gap:8px;font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.06em;color:var(--navy);text-decoration:none}
+.ac-link::after{content:"→";transition:transform .25s var(--ease)}
+.ac:hover .ac-link::after{transform:translateX(5px)}
+.sa-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:26px;margin-top:8px}
+.sa-col h4{font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.1em;color:var(--navy);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--navy-line)}
+.sa-col li{color:var(--ink-soft);font-size:15px;padding:5px 0}
+@media (max-width:1024px){.ac-grid{grid-template-columns:repeat(2,1fr)}.sa-cols{grid-template-columns:repeat(2,1fr);gap:26px 34px}}
+@media (max-width:760px){.ac-grid{grid-template-columns:1fr}.sa-cols{grid-template-columns:1fr}}
+
+/* ---------- mobile polish: city + service area pages ---------- */
+@media (max-width:980px){.subnav-logo img{height:62px}}
+@media (max-width:600px){
+  .subnav-logo{margin:0 12px}
+  .subnav-logo img{height:52px}
+  .page-hero h1{font-size:clamp(28px,7.4vw,38px);line-height:1.08}
+  .page-hero p{font-size:16.5px;margin-top:18px}
+  .area-chips{gap:9px}
+  .area-chips li{padding:9px 15px;font-size:14px}
+  .ac{padding:24px 22px 22px}
+  .ac h3{font-size:18px}
+  .split-media img{height:clamp(230px,58vw,340px)}
+  .svc-img{height:190px}
 }
-
-const __TwkCheck = ({ light }) => (
-  <svg viewBox="0 0 14 14" aria-hidden="true">
-    <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2"
-          strokeLinecap="round" strokeLinejoin="round"
-          stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} />
-  </svg>
-);
-
-// TweakColor — curated color/palette picker. Each option is either a single
-// hex string or an array of 1-5 hex strings; the card adapts — a lone color
-// renders solid, a palette renders colors[0] as the hero (left ~2/3) with the
-// rest stacked in a sharp column on the right. onChange emits the
-// option in the shape it was passed (string stays string, array stays array).
-// Without options it falls back to the native color input for back-compat.
-function TweakColor({ label, value, options, onChange }) {
-  if (!options || !options.length) {
-    return (
-      <div className="twk-row twk-row-h">
-        <div className="twk-lbl"><span>{label}</span></div>
-        <input type="color" className="twk-swatch" value={value}
-               onChange={(e) => onChange(e.target.value)} />
-      </div>
-    );
-  }
-  // Native <input type=color> emits lowercase hex per the HTML spec, so
-  // compare case-insensitively. String() guards JSON.stringify(undefined),
-  // which returns the primitive undefined (no .toLowerCase).
-  const key = (o) => String(JSON.stringify(o)).toLowerCase();
-  const cur = key(value);
-  return (
-    <TweakRow label={label}>
-      <div className="twk-chips" role="radiogroup">
-        {options.map((o, i) => {
-          const colors = Array.isArray(o) ? o : [o];
-          const [hero, ...rest] = colors;
-          const sup = rest.slice(0, 4);
-          const on = key(o) === cur;
-          return (
-            <button key={i} type="button" className="twk-chip" role="radio"
-                    aria-checked={on} data-on={on ? '1' : '0'}
-                    aria-label={colors.join(', ')} title={colors.join(' · ')}
-                    style={{ background: hero }}
-                    onClick={() => onChange(o)}>
-              {sup.length > 0 && (
-                <span>
-                  {sup.map((c, j) => <i key={j} style={{ background: c }} />)}
-                </span>
-              )}
-              {on && <__TwkCheck light={__twkIsLight(hero)} />}
-            </button>
-          );
-        })}
-      </div>
-    </TweakRow>
-  );
-}
-
-function TweakButton({ label, onClick, secondary = false }) {
-  return (
-    <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'}
-            onClick={onClick}>{label}</button>
-  );
-}
-
-Object.assign(window, {
-  useTweaks, TweaksPanel, TweakSection, TweakRow,
-  TweakSlider, TweakToggle, TweakRadio, TweakSelect,
-  TweakText, TweakNumber, TweakColor, TweakButton,
-});

@@ -1,122 +1,233 @@
-/* Precision Roofing Alabama LLC - sub-page interactions */
-(function () {
-  // year
-  var y = document.getElementById('year');
-  if (y) y.textContent = new Date().getFullYear();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Area | Precision Roofing Alabama</title>
+<meta name="description" content="Precision Roofing Alabama serves Montgomery, Birmingham, Huntsville, Auburn/Opelika, Baldwin County and the entire State of Alabama with roof replacements, repairs, and storm-damage insurance claims.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#091f2e">
+<link rel="canonical" href="https://www.precisionroofingalabama.com/service-area">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Precision Roofing Alabama">
+<meta property="og:title" content="Service Area | Precision Roofing Alabama">
+<meta property="og:description" content="Precision Roofing Alabama serves Montgomery, Birmingham, Huntsville, Auburn/Opelika, Baldwin County and the entire State of Alabama with roof replacements, repairs, and storm-damage insurance claims.">
+<meta property="og:url" content="https://www.precisionroofingalabama.com/service-area">
+<meta property="og:image" content="https://www.precisionroofingalabama.com/assets/hero.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Service Area | Precision Roofing Alabama">
+<meta name="twitter:description" content="Precision Roofing Alabama serves Montgomery, Birmingham, Huntsville, Auburn/Opelika, Baldwin County and the entire State of Alabama with roof replacements, repairs, and storm-damage insurance claims.">
+<meta name="twitter:image" content="https://www.precisionroofingalabama.com/assets/hero.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RoofingContractor",
+  "name": "Precision Roofing Alabama",
+  "legalName": "Precision Roofing Alabama LLC",
+  "url": "https://www.precisionroofingalabama.com/service-area",
+  "telephone": "+1-334-303-6398",
+  "image": "https://www.precisionroofingalabama.com/assets/logo.png",
+  "address": { "@type": "PostalAddress", "addressRegion": "AL", "addressCountry": "US" },
+  "areaServed": { "@type": "State", "name": "Alabama" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="assets/favicon.png" sizes="48x48">
+<link rel="icon" href="assets/favicon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/favicon-192.png">
+<link rel="shortcut icon" href="assets/favicon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18112449753"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18112449753');
+</script>
+<script src="tracking.js"></script>
+</head>
+<body>
+<header class="subhead">
+  <nav class="subnav">
+    <div class="subnav-left">
+      <a class="snl" href="about.html">About</a>
+      <div class="snl-drop">
+        <a class="snl" href="roof-replacements.html">Services
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <div class="snl-menu">
+          <a href="roof-replacements.html">Roof Replacements</a>
+          <a href="roof-repairs.html">Roof Repairs</a>
+          <a href="insurance-claims.html">Insurance Claim Help</a>
+        </div>
+      </div>
+    </div>
 
-  // mobile menu (subnav)
-  var burger = document.getElementById('subBurger');
-  var menu = document.getElementById('subMenu');
-  if (burger && menu) {
-    burger.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
-      burger.classList.toggle('active', open);
-    });
-    menu.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        menu.classList.remove('open');
-        burger.classList.remove('active');
-      });
-    });
-  }
+    <a class="subnav-logo" href="index.html" aria-label="Precision Roofing Alabama home">
+      <img src="assets/logo-white.png" alt="Precision Roofing Alabama LLC logo">
+    </a>
 
-  // scroll reveal
-  var reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    reveals.forEach(function (el, i) {
-      el.style.transitionDelay = (Math.min(i % 6, 5) * 60) + 'ms';
-      io.observe(el);
-    });
-  } else {
-    reveals.forEach(function (el) { el.classList.add('in'); });
-  }
+    <div class="subnav-right">
+      <a class="snl" href="financing.html">Financing</a>
+      <a class="snl" href="contact.html">Contact</a>
+      <div class="subnav-soc">
+        <a href="https://www.facebook.com/profile.php?id=61584185714824" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://www.instagram.com/precisionroofingalabama/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+      </div>
+      <a class="subnav-btn" href="index.html#contact">Free Inspection</a>
+    </div>
 
-  // ---- lead form (contact page) ----
-  var form = document.getElementById('quoteForm');
-  var success = document.getElementById('formSuccess');
-  if (form && success) {
-    var FORM_ENDPOINT = 'https://api.web3forms.com/submit';
-    var WEB3FORMS_KEY = '3c0f07c1-f2ef-4efe-8573-3fe251e4c961';
+    <button class="subnav-burger" id="subBurger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
 
-    var setErr = function (id, isErr) {
-      var el = document.getElementById(id);
-      var f = el && el.closest('.field');
-      if (f) f.classList.toggle('err', isErr);
-    };
-    var validEmail = function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); };
-    var validPhone = function (v) { return (v.replace(/\D/g, '').length >= 10); };
+  <div class="subnav-mobile" id="subMenu">
+    <a href="about.html">About</a>
+    <a href="roof-replacements.html">Roof Replacements</a>
+    <a href="roof-repairs.html">Roof Repairs</a>
+    <a href="insurance-claims.html">Insurance Claim Help</a>
+    <a href="financing.html">Financing</a>
+    <a href="contact.html">Contact</a>
+    <a class="subnav-btn" href="index.html#contact">Free Inspection</a>
+  </div>
+</header>
+<main>
 
-    var showSuccess = function () {
-      form.style.display = 'none';
-      success.classList.add('show');
-      if (window.prTrackLead) window.prTrackLead({ form: 'contact' });
-    };
-    var showSendError = function (btn) {
-      if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
-      var note = document.getElementById('formErrNote');
-      if (!note) {
-        note = document.createElement('p');
-        note.id = 'formErrNote';
-        note.style.cssText = 'margin-top:14px;color:#b3261e;font-size:14.5px;font-weight:600';
-        form.appendChild(note);
-      }
-      note.textContent = "Sorry, something went wrong sending your message. Please call us at (334) 303-6398.";
-    };
+<section class="page-hero" data-screen-label="Service Area - Hero">
+  <div class="wrap">
+    <h1>Our Service Area</h1>
+    <p>Precision Roofing Alabama serves homeowners across the entire State of Alabama, with crews working daily in these five major markets.</p>
+  </div>
+</section>
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var ok = true;
-      var name = document.getElementById('name').value.trim();
-      var phone = document.getElementById('phone').value.trim();
-      var email = document.getElementById('email').value.trim();
-      var service = document.getElementById('service').value;
-      var message = document.getElementById('message').value.trim();
+<section class="section services" data-screen-label="Service Area - Cities">
+  <div class="wrap">
+    <div class="ac-grid">
+      <article class="ac reveal">
+        <h3>Montgomery, AL</h3>
+        <p>Our home base. From Cloverdale's older homes to the new builds in Pike Road, we know the River Region's roofs, its heat, and its spring hail lines.</p>
+        <a class="ac-link" href="montgomery.html">See Montgomery Services</a>
+      </article>
+      <article class="ac reveal">
+        <h3>Birmingham, AL</h3>
+        <p>Jefferson and Shelby County sit in the heart of Dixie Alley. Hail and straight-line wind damage here is rarely visible from the driveway, so we document every finding with photos.</p>
+        <a class="ac-link" href="birmingham.html">See Birmingham Services</a>
+      </article>
+      <article class="ac reveal">
+        <h3>Huntsville, AL</h3>
+        <p>Mid-century homes in Five Points and brand-new builds across Madison and Harvest need different eyes. Wind-creased shingles are the damage we catch most in North Alabama.</p>
+        <a class="ac-link" href="huntsville.html">See Huntsville Services</a>
+      </article>
+      <article class="ac reveal">
+        <h3>Auburn & Opelika, AL</h3>
+        <p>Long humid summers drive algae streaking and decking moisture across Lee County. We inspect the full system, and we work well with rental and investment property owners.</p>
+        <a class="ac-link" href="auburn-opelika.html">See Auburn & Opelika Services</a>
+      </article>
+      <article class="ac reveal">
+        <h3>Baldwin County, AL</h3>
+        <p>Gulf Coast roofing is its own discipline. Hurricane wind uplift and salt air find every shortcut, so we install high-wind CertainTeed systems built for the coast.</p>
+        <a class="ac-link" href="baldwin-county.html">See Baldwin County Services</a>
+      </article>
+    </div>
+  </div>
+</section>
 
-      setErr('name', !name); if (!name) ok = false;
-      setErr('email', !validEmail(email)); if (!validEmail(email)) ok = false;
-      if (phone) { setErr('phone', !validPhone(phone)); if (!validPhone(phone)) ok = false; }
-      else { setErr('phone', false); }
+<section class="section area" data-screen-label="Service Area - Communities">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div>
+        <span class="eyebrow center">Statewide Coverage</span>
+        <h2 class="display">Communities We Serve</h2>
+      </div>
+      <p class="lead">Don't see your town? Call us at (334) 303-6398. We serve the entire State of Alabama.</p>
+    </div>
+    <div class="sa-cols">
+      <div class="sa-col reveal">
+        <h4>River Region</h4>
+        <ul><li>Prattville</li><li>Wetumpka</li><li>Millbrook</li><li>Pike Road</li><li>Elmore</li></ul>
+      </div>
+      <div class="sa-col reveal">
+        <h4>Birmingham Metro</h4>
+        <ul><li>Hoover</li><li>Vestavia Hills</li><li>Mountain Brook</li><li>Homewood</li><li>Trussville</li><li>Chelsea</li><li>Pelham</li><li>Alabaster</li><li>Gardendale</li><li>Helena</li><li>Leeds</li><li>Pinson</li></ul>
+      </div>
+      <div class="sa-col reveal">
+        <h4>North Alabama</h4>
+        <ul><li>Madison</li><li>Decatur</li><li>Athens</li><li>Harvest</li><li>Meridianville</li><li>New Market</li><li>Owens Cross Roads</li><li>Hazel Green</li><li>Gurley</li><li>Triana</li><li>Toney</li></ul>
+      </div>
+      <div class="sa-col reveal">
+        <h4>Lee County</h4>
+        <ul><li>Auburn</li><li>Opelika</li><li>Phenix City</li><li>Smiths Station</li><li>Salem</li><li>Notasulga</li><li>Waverly</li><li>Beauregard</li><li>Loachapoka</li><li>Valley</li><li>Lanett</li><li>Tuskegee</li></ul>
+      </div>
+      <div class="sa-col reveal">
+        <h4>Gulf Coast</h4>
+        <ul><li>Daphne</li><li>Fairhope</li><li>Foley</li><li>Spanish Fort</li><li>Gulf Shores</li><li>Orange Beach</li><li>Robertsdale</li><li>Bay Minette</li><li>Loxley</li><li>Silverhill</li><li>Summerdale</li><li>Elberta</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-      if (!ok) {
-        var firstErr = form.querySelector('.field.err input, .field.err select');
-        if (firstErr) firstErr.focus();
-        return;
-      }
+<section class="endcta" data-screen-label="Service Area - CTA">
+  <div class="wrap">
+    <h2>Don't See Your Area?</h2>
+    <p>We cover most of Alabama. Give us a call to confirm your area. We likely serve it.</p>
+    <a href="index.html#contact" class="btn btn-light btn-lg">Schedule Free Inspection</a>
+  </div>
+</section>
 
-      var isLive = location.hostname.indexOf('precisionroofingalabama') !== -1;
-      var btn = form.querySelector('button[type="submit"]');
-      var handleFail = function () { if (isLive) { showSendError(btn); } else { showSuccess(); } };
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+</main>
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="assets/logo.png" alt="Precision Roofing Alabama LLC logo" style="filter:brightness(0) invert(1)">
+        <p>Built with Precision. Protected for Years. Licensed &amp; insured roofing for homeowners across the State of Alabama.</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap">
+          <span style="display:inline-flex;background:#fff;padding:6px 12px;border-radius:8px"><img src="assets/certainteed-logo.png" alt="CertainTeed Saint-Gobain" style="height:24px;width:auto;display:block"></span>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="financing.html">Financing</a></li>
+          <li><a href="service-area.html">Service Area</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="roof-replacements.html">Replacements</a></li>
+          <li><a href="roof-repairs.html">Repairs</a></li>
+          <li><a href="insurance-claims.html">Insurance Claim Help</a></li>
+        </ul>
+      </div>
+      <div class="foot-col foot-contact">
+        <h4>Get In Touch</h4>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+13343036398">(334) 303-6398</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg><a href="mailto:Contact.precsionral@gmail.com">Contact.precsionral@gmail.com</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>HB&nbsp;# 41012</span></li>
+        </ul>
+        <div class="foot-social">
+          <a href="https://www.facebook.com/profile.php?id=61584185714824" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/precisionroofingalabama/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Precision Roofing Alabama LLC. All rights reserved. · Licensed &amp; Insured.</span>
+      <span>Built with Precision. Protected for Years.</span>
+    </div>
+  </div>
+</footer>
 
-      fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: 'New Quote Request: ' + name,
-          from_name: 'Precision Roofing Alabama Website',
-          replyto: email,
-          name: name, email: email, phone: phone, service: service, message: message
-        })
-      })
-        .then(function (r) { return r.json(); })
-        .then(function (res) { if (res && res.success) { showSuccess(); } else { handleFail(); } })
-        .catch(function () { handleFail(); });
-    });
-
-    ['name', 'phone', 'email'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.addEventListener('input', function () { setErr(id, false); });
-      el.addEventListener('change', function () { setErr(id, false); });
-    });
-  }
-})();
+<script src="subpage.js"></script>
+<!-- Vercel Web Analytics -->
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
