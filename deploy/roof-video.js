@@ -1,5 +1,5 @@
 /* ============================================================
-   Precision Roofing — roof-install video
+   Precision Roofing roof-install video
    • Autoplays the drone re-roof clip (muted) the first time it
      scrolls into view.
    • Center Play button lets visitors start it manually if the
