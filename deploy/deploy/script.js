@@ -1,4 +1,4 @@
-/* Precision Roofing Alabama LLC — interactions */
+/* Precision Roofing Alabama LLC - interactions */
 (function () {
   // year
   var y = document.getElementById('year');
@@ -81,7 +81,7 @@
       note.style.cssText = 'margin-top:14px;color:#b3261e;font-size:14.5px;font-weight:600';
       form.appendChild(note);
     }
-    note.textContent = "Sorry — something went wrong sending your message. Please call us at (334) 303-6398.";
+    note.textContent = "Sorry, something went wrong sending your message. Please call us at (334) 303-6398.";
   }
 
   form.addEventListener('submit', function (e) {
@@ -95,7 +95,7 @@
 
     setErr('name', !name); if (!name) ok = false;
     setErr('email', !validEmail(email)); if (!validEmail(email)) ok = false;
-    // phone optional — validate only if something was entered
+    // phone optional, validate only if something was entered
     if (phone) { setErr('phone', !validPhone(phone)); if (!validPhone(phone)) ok = false; }
     else { setErr('phone', false); }
 
@@ -117,7 +117,7 @@
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
-        subject: 'New Quote Request — ' + name,
+        subject: 'New Quote Request: ' + name,
         from_name: 'Precision Roofing Alabama Website',
         replyto: email,
         name: name,

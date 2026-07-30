@@ -1,5 +1,5 @@
 /* ============================================================
-   Precision Roofing Alabama LLC — Design System
+   Precision Roofing Alabama LLC - Design System
    Palette: Brand navy #0F364F · Cream · White
    Type: Archivo (display) · Hanken Grotesk (text)
    ============================================================ */
@@ -422,7 +422,7 @@ h2.display{font-size:clamp(30px,4.6vw,52px);margin-top:18px}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
 /* ============================================================
-   FULL-SCREEN HERO (Hugo-style) — photo bg, centered logo
+   FULL-SCREEN HERO (Hugo-style) - photo bg, centered logo
    ============================================================ */
 .hero-screen{
   position:relative;min-height:100vh;min-height:100svh;
@@ -582,7 +582,7 @@ h2.display{font-size:clamp(30px,4.6vw,52px);margin-top:18px}
 .snl-menu a:hover{background:rgba(255,255,255,.07);color:#fff}
 
 .subnav-logo{flex:0 0 auto;margin:0 clamp(24px,3.4vw,54px);display:flex;align-items:center}
-.subnav-logo img{height:64px;width:auto;display:block}
+.subnav-logo img{height:76px;width:auto;display:block}
 .subnav-soc{display:flex;align-items:center;gap:14px}
 .subnav-soc a{display:grid;place-items:center;color:rgba(255,255,255,.8);transition:.22s var(--ease)}
 .subnav-soc a:hover{color:#fff}
@@ -734,4 +734,47 @@ h2.display{font-size:clamp(30px,4.6vw,52px);margin-top:18px}
   .contact-meta li{font-size:15.5px;word-break:break-word}
   .faq-item summary{padding:22px 2px;gap:16px}
   .sec-head{gap:14px}
+}
+
+/* ---------- city pages ---------- */
+.area-chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;max-width:900px;margin-inline:auto}
+.area-chips li{background:var(--white);border:1px solid var(--navy-line);border-radius:40px;padding:11px 20px;font-weight:600;font-size:15px;color:var(--navy);box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:9px}
+.area-chips li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--navy);flex:none}
+.foot-areas{border-top:1px solid rgba(255,255,255,.1);margin-top:clamp(34px,4vw,48px);padding-top:26px}
+.foot-areas h4{color:var(--white);font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;font-family:"Archivo"}
+.foot-area-links{display:flex;flex-wrap:wrap;gap:10px 22px}
+.foot-area-links a{font-size:15px;transition:color .2s}
+.foot-area-links a:hover{color:var(--white)}
+.region-link{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-weight:700;font-size:14.5px;color:var(--navy);text-decoration:none;letter-spacing:.01em}
+.region-link::after{content:"→";transition:transform .25s var(--ease)}
+.region:hover .region-link::after{transform:translateX(4px)}
+
+/* ---------- service area page ---------- */
+.ac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ac{background:var(--white);border:1px solid var(--navy-line);border-radius:var(--radius-lg);padding:32px 32px 28px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.ac:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.ac h3{font-family:"Archivo",sans-serif;font-weight:900;text-transform:uppercase;font-size:20px;color:var(--navy);letter-spacing:-.01em;margin-bottom:12px}
+.ac p{color:var(--ink-soft);font-size:15.5px;line-height:1.62;text-wrap:pretty;flex:1}
+.ac-link{margin-top:22px;display:inline-flex;align-items:center;gap:8px;font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.06em;color:var(--navy);text-decoration:none}
+.ac-link::after{content:"→";transition:transform .25s var(--ease)}
+.ac:hover .ac-link::after{transform:translateX(5px)}
+.sa-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:26px;margin-top:8px}
+.sa-col h4{font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.1em;color:var(--navy);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--navy-line)}
+.sa-col li{color:var(--ink-soft);font-size:15px;padding:5px 0}
+@media (max-width:1024px){.ac-grid{grid-template-columns:repeat(2,1fr)}.sa-cols{grid-template-columns:repeat(2,1fr);gap:26px 34px}}
+@media (max-width:760px){.ac-grid{grid-template-columns:1fr}.sa-cols{grid-template-columns:1fr}}
+
+/* ---------- mobile polish: city + service area pages ---------- */
+@media (max-width:980px){.subnav-logo img{height:62px}}
+@media (max-width:600px){
+  .subnav-logo{margin:0 12px}
+  .subnav-logo img{height:52px}
+  .page-hero h1{font-size:clamp(28px,7.4vw,38px);line-height:1.08}
+  .page-hero p{font-size:16.5px;margin-top:18px}
+  .area-chips{gap:9px}
+  .area-chips li{padding:9px 15px;font-size:14px}
+  .ac{padding:24px 22px 22px}
+  .ac h3{font-size:18px}
+  .split-media img{height:clamp(230px,58vw,340px)}
+  .svc-img{height:190px}
 }

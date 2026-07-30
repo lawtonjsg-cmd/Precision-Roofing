@@ -1,5 +1,5 @@
 /* ============================================================
-   Precision Roofing Alabama LLC — Conversion Tracking
+   Precision Roofing Alabama LLC - Conversion Tracking
    ------------------------------------------------------------
    Fires a conversion on:
      1. Quote-form submissions  -> window.prTrackLead()
@@ -16,8 +16,8 @@
   var CONFIG = {
     GA4_ID:         'G-XXXXXXXXXX',         // GA4 Measurement ID (optional)
     GOOGLE_ADS_ID:  'AW-18112449753',       // Google Ads Conversion ID
-    ADS_LEAD_LABEL: 'ctJ0CJn0lMkcENmZ2LxD', // Google Ads label — form lead
-    ADS_CALL_LABEL: '5C6_CJz0lMkcENmZ2LxD', // Google Ads label — phone call
+    ADS_LEAD_LABEL: 'ctJ0CJn0lMkcENmZ2LxD', // Google Ads label: form lead
+    ADS_CALL_LABEL: '5C6_CJz0lMkcENmZ2LxD', // Google Ads label: phone call
     META_PIXEL_ID:  ''                       // Meta (Facebook) Pixel ID (optional)
   };
 
