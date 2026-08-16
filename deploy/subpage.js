@@ -68,7 +68,7 @@
         note.style.cssText = 'margin-top:14px;color:#b3261e;font-size:14.5px;font-weight:600';
         form.appendChild(note);
       }
-      note.textContent = "Sorry, something went wrong sending your message. Please call us at (334) 303-6398.";
+      note.textContent = "Sorry, something went wrong sending your message. Please call us at (334) 318-7255.";
     };
 
     form.addEventListener('submit', function (e) {
