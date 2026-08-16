@@ -156,7 +156,7 @@ h2.display{font-size:clamp(30px,4.6vw,52px);margin-top:18px}
 .sec-head.center{display:block;text-align:center}
 .sec-head.center .lead{margin-left:auto;margin-right:auto}
 .sec-head .lead{margin-top:14px}
-.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .svc{
   position:relative;background:var(--paper);border:1px solid var(--navy-line);border-radius:var(--radius-lg);
   display:flex;flex-direction:column;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);overflow:hidden;
