@@ -778,3 +778,31 @@ h2.display{font-size:clamp(30px,4.6vw,52px);margin-top:18px}
   .split-media img{height:clamp(230px,58vw,340px)}
   .svc-img{height:190px}
 }
+
+/* ============ BBB SEAL ============ */
+/* Dynamic seal hotlinked from BBB (it restamps its own "as of" date, so it
+   must not be self-hosted). Native art is 200x42. */
+.bbb-seal{
+  display:inline-flex;align-items:center;
+  background:#fff;padding:5px 9px;border-radius:8px;
+  line-height:0;flex:none;
+  transition:transform .16s ease,box-shadow .16s ease;
+}
+.bbb-seal img{height:38px;width:auto;display:block;max-width:100%}
+.bbb-seal:hover{transform:translateY(-1px);box-shadow:0 6px 16px -8px rgba(9,31,46,.45)}
+.bbb-seal:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* footer: .foot-brand img is height:104px, so this needs the extra specificity */
+.foot-brand .bbb-seal{padding:4px 7px}
+.foot-brand .bbb-seal img{height:32px;margin-bottom:0}
+
+/* Floor is 30px. Below that the seal's "as of" date and "Click for Profile"
+   lines stop being legible, so it shrinks no further. */
+@media (max-width:600px){
+  .bbb-seal img{height:34px}
+  .foot-brand .bbb-seal img{height:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  .bbb-seal{transition:none}
+  .bbb-seal:hover{transform:none}
+}

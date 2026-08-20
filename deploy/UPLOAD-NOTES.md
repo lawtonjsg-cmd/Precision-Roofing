@@ -1,20 +1,26 @@
-# Upload notes - Aug 20, 2026 (round 2: address locality)
+# Upload notes - Aug 20, 2026 (round 3: BBB seal)
 
-SMALL UPDATE. Nothing to delete this time, nothing else changed.
+Nothing to delete. Copy these into the repo root, keeping the src/ subfolder.
 
-Copy these 16 files into the repo root, overwriting. Vercel redeploys automatically.
+## Files
+- 14 .html  - BBB seal added, plus the BBB profile added to schema sameAs
+- styles.css      - minified, now includes the .bbb-seal rules
+- src/styles.css  - readable source (edit here, then re-minify)
 
-## What changed
-- All 14 .html files: the PostalAddress in the schema now includes
-  addressLocality "Opelika" and postalCode "36804", alongside the existing
-  addressRegion AL and addressCountry US. streetAddress is intentionally left out,
-  which is correct for a service-area business.
-- llms.txt and llms-full.txt: state that the company is based in Opelika 36804 and
-  serves the entire State of Alabama, so AI answers do not describe it as
-  Opelika-only.
+## Where the seal now appears
+- Homepage, "Why Alabama Homeowners Choose Us" band, beside the CertainTeed logo
+- About page, beside the CertainTeed logo
+- Footer of all 14 pages
 
-areaServed is untouched and still covers the whole state plus all six named
-metros, so statewide reach is unaffected.
+## Sizing
+Body 38px desktop / 34px mobile. Footer 32px desktop / 30px mobile.
+Floor is 30px, below that the seal's date and "Click for Profile" stop being
+legible. Aspect ratio is locked at the native 4.76:1 everywhere.
 
-## After deploy
-Semrush -> Site Audit -> Rerun campaign (the trial makes this work now).
+## The seal is HOTLINKED on purpose
+It is generated live by BBB and stamps its own "As of <date>" line. Saving a copy
+would freeze that date and go stale, so it must load from seal-centralgeorgia.bbb.org.
+width and height are set on the img so there is no layout shift while it loads.
+
+## Re-minify after editing src/styles.css
+npx clean-css-cli -O2 -o styles.css src/styles.css
