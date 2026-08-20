@@ -1,27 +1,38 @@
-# Upload notes - Aug 20, 2026 (round 3: BBB seal)
+# Upload notes - Aug 20, 2026 (round 4: asset version query)
 
-Nothing to delete. Copy these into the repo root, keeping the src/ subfolder.
+14 .html files only. No CSS/JS changed, nothing to delete.
 
-## Files
-- 14 .html  - BBB seal added, plus the BBB profile added to schema sameAs
-- styles.css      - minified, now includes the .bbb-seal rules
-- src/styles.css  - readable source (edit here, then re-minify)
+## What changed
+Every reference to the cached CSS/JS now carries ?v=20260820:
 
-## Where the seal now appears
-- Homepage, "Why Alabama Homeowners Choose Us" band, beside the CertainTeed logo
-- About page, beside the CertainTeed logo
-- Footer of all 14 pages
+  styles.css?v=20260820     (14 refs)
+  tracking.js?v=20260820    (14 refs)
+  subpage.js?v=20260820     (13 refs)
+  script.js?v=20260820       (1 ref)
+  roof-video.js?v=20260820   (1 ref)
 
-## Sizing
-Body 38px desktop / 34px mobile. Footer 32px desktop / 30px mobile.
-Floor is 30px, below that the seal's date and "Click for Profile" stop being
-legible. Aspect ratio is locked at the native 4.76:1 everywhere.
+43 references total.
 
-## The seal is HOTLINKED on purpose
-It is generated live by BBB and stamps its own "As of <date>" line. Saving a copy
-would freeze that date and go stale, so it must load from seal-centralgeorgia.bbb.org.
-width and height are set on the img so there is no layout shift while it loads.
+## Why
+vercel.json caches those five files for 24 hours. Without a version in the URL,
+a returning visitor gets NEW html with OLD css/js for up to a day. That is what
+would have made the BBB seal render about 3x too tall in the footer for anyone
+who had visited recently.
 
-## Re-minify after editing src/styles.css
-npx clean-css-cli -O2 -o styles.css src/styles.css
+The bigger risk is tracking.js, which holds the Google Ads conversion labels and
+the Meta Pixel id. A stale copy after a tracking change means lost conversion
+data, which is much worse than a misaligned logo.
 
+## THE ONE RULE
+Whenever you change styles.css or any of the .js files, bump the number in all
+14 html files. If you forget, returning visitors keep the old file for 24h.
+
+Find and replace across the 14 files:
+  v=20260820   ->   v=<today as YYYYMMDD>
+
+## Verified before staging
+- Cache-Control header still applies with the query string (checked live:
+  /styles.css?v=... still returns public, max-age=86400). Vercel matches the
+  source pattern on the path, not the query.
+- All 43 versioned references resolve to real files, 0 broken.
+- CSS confirmed applying on 5 pages, gtag and prTrackLead both still functions.
