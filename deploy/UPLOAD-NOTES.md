@@ -24,3 +24,4 @@ width and height are set on the img so there is no layout shift while it loads.
 
 ## Re-minify after editing src/styles.css
 npx clean-css-cli -O2 -o styles.css src/styles.css
+
