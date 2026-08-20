@@ -1,25 +1,20 @@
-# Upload notes - Aug 20, 2026 (Semrush fixes + AI visibility)
+# Upload notes - Aug 20, 2026 (round 2: address locality)
 
-Copy every file here into the repo root, keeping the `src/` subfolder.
+SMALL UPDATE. Nothing to delete this time, nothing else changed.
 
-## MUST DO: delete one file from the repo
-- `tweaks-panel.jsx`  <- DELETE. Uploading files will not remove it.
-  It was a leftover design-editor panel pulling 2.3 MB of React dev builds
-  from unpkg onto the live /about page.
+Copy these 16 files into the repo root, overwriting. Vercel redeploys automatically.
 
-## New files
-- `llms.txt`       - concise AI crawler summary of the business
-- `llms-full.txt`  - full text of all 14 pages for AI ingestion (11,400 words)
-- `src/`           - readable originals of the JS/CSS
+## What changed
+- All 14 .html files: the PostalAddress in the schema now includes
+  addressLocality "Opelika" and postalCode "36804", alongside the existing
+  addressRegion AL and addressCountry US. streetAddress is intentionally left out,
+  which is correct for a service-area business.
+- llms.txt and llms-full.txt: state that the company is based in Opelika 36804 and
+  serves the entire State of Alabama, so AI answers do not describe it as
+  Opelika-only.
 
-## Changed
-all 14 .html, robots.txt, sitemap.xml, vercel.json,
-styles.css, script.js, subpage.js, tracking.js, roof-video.js (minified)
-
-## Re-minify after editing src/
-npx terser src/script.js -c -m --comments false -o script.js
-npx clean-css-cli -O2 -o styles.css src/styles.css
+areaServed is untouched and still covers the whole state plus all six named
+metros, so statewide reach is unaffected.
 
 ## After deploy
-1. Semrush -> Site Audit -> Rerun campaign
-2. Google Search Console -> resubmit sitemap.xml
+Semrush -> Site Audit -> Rerun campaign (the trial makes this work now).
