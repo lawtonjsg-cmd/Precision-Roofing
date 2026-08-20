@@ -1,4 +1,66 @@
+# Precision Roofing Alabama LLC
+# https://www.precisionroofingalabama.com/
+
 User-agent: *
 Allow: /
+
+# ---- AI assistants and answer engines: explicitly welcome ----
+# Allowing these lets Precision Roofing Alabama be cited in AI answers
+# about roofing, storm damage, and insurance claims in Alabama.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# AI content index
+# https://www.precisionroofingalabama.com/llms.txt
+# https://www.precisionroofingalabama.com/llms-full.txt
 
 Sitemap: https://www.precisionroofingalabama.com/sitemap.xml
