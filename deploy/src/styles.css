@@ -603,7 +603,7 @@ h2.display{font-size:clamp(30px,4.6vw,52px);margin-top:18px}
 .subnav-mobile.open{display:flex}
 .subnav-mobile a{font-family:"Archivo",sans-serif;font-weight:700;font-size:14px;letter-spacing:.14em;
   text-transform:uppercase;color:#fff;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.1)}
-.subnav-mobile .subnav-btn{margin-top:16px;text-align:center}
+.subnav-mobile .subnav-btn{margin-top:16px;text-align:center;color:var(--navy-900)}
 
 /* page hero band */
 .page-hero{position:relative;background:var(--navy-900);color:#fff;overflow:hidden;
